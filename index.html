@@ -197,7 +197,7 @@
                 <a href="#">📍 Rua Principal, 123 — Sua Cidade/SP</a>
                 <a href="#">🕐 Seg–Sex: 9h às 18h | Sab: 9h às 13h</a>
                 <a href="#">📞 (XX) XXXXX-XXXX</a>
-                <a href="#">✉️ contato@elvisveiculos.com.br</a>
+                <a href="#">✉️ <span class="__cf_email__" data-cfemail="d3b0bcbda7b2a7bc93b6bfa5baa0a5b6bab0a6bfbca0fdb0bcbefdb1a1">[email&#160;protected]</span></a>
             </div>
             <a href="#" class="footer-wpp-btn" id="footerWppBtn">💬 Falar no WhatsApp</a>
         </div>
@@ -206,6 +206,68 @@
             <div class="footer-innovaideia">Desenvolvido por <strong>InNovaIdeia</strong> — Tecnologia que vende</div>
         </div>
     </footer>
+
+    <!-- Acesso Admin (discreto) -->
+    <a href="./admin.html" class="admin-access" title="Painel Administrativo" aria-label="Acesso ao painel administrativo">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+    </a>
+
+    <style>
+    .admin-access {
+        position: fixed;
+        bottom: 22px;
+        left: 22px;
+        z-index: 900;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(255,255,255,0.1);
+        background: transparent;
+        border-radius: 50%;
+        text-decoration: none;
+        transition: color .4s ease, background .4s ease, transform .5s ease, opacity .4s ease;
+        opacity: 0;
+        pointer-events: auto;
+    }
+    /* Área de ativação invisível maior que o ícone */
+    .admin-access::before {
+        content: '';
+        position: absolute;
+        inset: -14px;
+        border-radius: 50%;
+    }
+    .admin-access:hover {
+        color: rgba(201,168,76,0.9);
+        background: rgba(201,168,76,0.1);
+        transform: rotate(60deg);
+        opacity: 1;
+    }
+    .admin-access:focus-visible {
+        outline: 2px solid rgba(201,168,76,0.5);
+        outline-offset: 4px;
+        opacity: 1;
+        color: rgba(201,168,76,0.9);
+    }
+    .admin-access svg {
+        width: 18px;
+        height: 18px;
+        flex-shrink: 0;
+    }
+    /* Mobile: levemente visível para o admin conseguir tocar */
+    @media (hover: none) {
+        .admin-access { opacity: 0.06; }
+        .admin-access:active {
+            opacity: 1;
+            color: rgba(201,168,76,0.9);
+            transform: rotate(60deg);
+        }
+    }
+    </style>
 
     <!-- JavaScript principal -->
     <script src="./script.js"></script>
