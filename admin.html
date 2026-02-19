@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin — ELVIS VEÍCULOS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./admin-style.css">
+</head>
+<body>
+    <div class="proto-banner">🔐 PROTÓTIPO — Painel Admin — InNovaIdeia × ELVIS VEÍCULOS</div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast">
+        <div class="toast-icon">✅</div>
+        <div>
+            <div class="toast-text"></div>
+            <div class="toast-sub"></div>
+        </div>
+    </div>
+
+    <!-- LOGIN -->
+    <div id="login-screen">
+        <div class="login-box">
+            <div class="login-logo">
+                <div class="login-icon">E</div>
+                <div class="login-title">ELVIS VEÍCULOS</div>
+                <div class="login-sub">Painel Administrativo</div>
+            </div>
+            <div id="login-error">❌ Usuário ou senha incorretos.</div>
+            <div class="form-group">
+                <label for="login-user">Usuário</label>
+                <input type="text" id="login-user" placeholder="admin" autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label for="login-pass">Senha</label>
+                <input type="password" id="login-pass" placeholder="••••••••">
+            </div>
+            <button id="btn-login">Entrar no Painel</button>
+            <div class="login-hint">Demo — usuário: <span>admin</span> / senha: <span>elvis2026</span></div>
+        </div>
+    </div>
+
+    <!-- ADMIN -->
+    <div id="admin-screen">
+        <div class="sidebar">
+            <div class="sidebar-logo">
+                <div class="s-icon">E</div>
+                <div class="brand">ELVIS VEÍCULOS</div>
+                <div class="brand-sub">Painel Admin</div>
+            </div>
+            <div class="sidebar-nav">
+                <div class="nav-section-label">Principal</div>
+                <div class="nav-item active" data-page="dashboard"><span class="nav-icon">📊</span> Dashboard</div>
+                <div class="nav-item" data-page="cadastro"><span class="nav-icon">➕</span> Cadastrar Veículo</div>
+                <div class="nav-section-label" style="margin-top:12px">Gestão</div>
+                <div class="nav-item" data-page="estoque"><span class="nav-icon">🚗</span> Estoque</div>
+                <div class="nav-item" data-page="galeria"><span class="nav-icon">📸</span> Galeria de Fotos</div>
+                <div class="nav-item" data-page="leads"><span class="nav-icon">💬</span> Contatos / Leads</div>
+                <div class="nav-section-label" style="margin-top:12px">Sistema</div>
+                <div class="nav-item" data-page="config"><span class="nav-icon">⚙️</span> Configurações</div>
+                <div class="nav-item" data-action="site"><span class="nav-icon">🌐</span> Ver Site</div>
+            </div>
+            <div class="sidebar-footer">
+                <div class="admin-user">
+                    <div class="admin-avatar">A</div>
+                    <div>
+                        <div class="admin-name">Administrador</div>
+                        <div class="admin-role">Elvis Veículos</div>
+                    </div>
+                </div>
+                <button id="btn-logout">🚪 Sair</button>
+            </div>
+        </div>
+
+        <div class="main">
+            <div class="topbar">
+                <div>
+                    <div class="topbar-title" id="page-title">Dashboard</div>
+                    <div class="topbar-sub" id="page-sub">Visão geral do estoque</div>
+                </div>
+                <div class="topbar-actions">
+                    <div class="topbar-date" id="topbar-date"></div>
+                    <button id="btn-new-veiculo">+ Novo Veículo</button>
+                </div>
+            </div>
+
+            <div class="content">
+                <!-- DASHBOARD -->
+                <div class="page active" id="page-dashboard">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-top"><div class="stat-label">Total Estoque</div><div class="stat-icon">🚗</div></div>
+                            <div class="stat-value" id="stat-total">0</div>
+                            <div class="stat-change" id="stat-change-total"></div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-top"><div class="stat-label">Ativos</div><div class="stat-icon">✅</div></div>
+                            <div class="stat-value" id="stat-ativos">0</div>
+                            <div class="stat-change" id="stat-change-ativos"></div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-top"><div class="stat-label">Leads / Contatos</div><div class="stat-icon">💬</div></div>
+                            <div class="stat-value" id="stat-contatos">0</div>
+                            <div class="stat-change" id="stat-leads-change">← novos hoje</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-top"><div class="stat-label">Valor em Estoque</div><div class="stat-icon">💰</div></div>
+                            <div class="stat-value" id="stat-valor">R$0</div>
+                            <div class="stat-change" id="stat-media"></div>
+                        </div>
+                    </div>
+                    <div class="dash-grid">
+                        <div class="card">
+                            <div class="card-title">🚗 Últimos Veículos Cadastrados</div>
+                            <div class="stock-list" id="dashboard-list"></div>
+                        </div>
+                        <div class="card">
+                            <div class="card-title">🔔 Leads Recentes</div>
+                            <div class="alert-list" id="dashboard-leads"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CADASTRO -->
+                <div class="page" id="page-cadastro">
+                    <div class="form-card">
+                        <div class="form-section-title">🚗 Dados do Veículo</div>
+                        <div class="form-grid cols3">
+                            <div class="fg">
+                                <label for="f-marca">Marca *</label>
+                                <select id="f-marca" required>
+                                    <option value="">Selecione</option>
+                                    <option>Hyundai</option><option>Toyota</option><option>Volkswagen</option>
+                                    <option>Chevrolet</option><option>Honda</option><option>Ford</option>
+                                    <option>Jeep</option><option>Mitsubishi</option><option>Nissan</option>
+                                    <option>Fiat</option><option>Renault</option><option>Peugeot</option>
+                                    <option>Citroën</option><option>BMW</option><option>Mercedes-Benz</option>
+                                    <option>Audi</option><option>Kia</option><option>Subaru</option>
+                                </select>
+                            </div>
+                            <div class="fg">
+                                <label for="f-modelo">Modelo *</label>
+                                <input type="text" id="f-modelo" placeholder="Ex: Azera, Corolla, Jetta..." required>
+                            </div>
+                            <div class="fg">
+                                <label for="f-versao">Versão</label>
+                                <input type="text" id="f-versao" placeholder="Ex: 3.0 V6 GLS Automático">
+                            </div>
+                        </div>
+                        <div class="form-grid cols3">
+                            <div class="fg">
+                                <label for="f-ano-fab">Ano Fabricação</label>
+                                <input type="number" id="f-ano-fab" placeholder="2011" min="1990" max="2026">
+                            </div>
+                            <div class="fg">
+                                <label for="f-ano-mod">Ano Modelo</label>
+                                <input type="number" id="f-ano-mod" placeholder="2012" min="1990" max="2027">
+                            </div>
+                            <div class="fg">
+                                <label for="f-motor">Motor</label>
+                                <input type="text" id="f-motor" placeholder="Ex: 3.0 V6 270cv">
+                            </div>
+                        </div>
+                        <div class="form-grid">
+                            <div class="fg">
+                                <label for="f-preco">Preço de Venda (R$) *</label>
+                                <input type="text" id="f-preco" placeholder="Ex: 74.990" required>
+                            </div>
+                            <div class="fg">
+                                <label for="f-fipe">Preço FIPE (R$)</label>
+                                <input type="text" id="f-fipe" placeholder="Ex: 79.100">
+                            </div>
+                            <div class="fg">
+                                <label for="f-km">Quilometragem</label>
+                                <input type="text" id="f-km" placeholder="Ex: 98.000">
+                            </div>
+                            <div class="fg">
+                                <label for="f-cor">Cor</label>
+                                <input type="text" id="f-cor" placeholder="Ex: Prata Metálico">
+                            </div>
+                        </div>
+
+                        <div class="form-section-title" style="margin-top:4px">⚙️ Características</div>
+                        <div class="form-grid cols3">
+                            <div class="fg">
+                                <label for="f-comb">Combustível</label>
+                                <select id="f-comb">
+                                    <option>Flex</option><option>Gasolina</option><option>Diesel</option>
+                                    <option>Elétrico</option><option>Híbrido</option><option>GNV</option>
+                                </select>
+                            </div>
+                            <div class="fg">
+                                <label for="f-cambio">Câmbio</label>
+                                <select id="f-cambio">
+                                    <option>Automático</option><option>Manual</option>
+                                    <option>CVT</option><option>Automatizado</option>
+                                </select>
+                            </div>
+                            <div class="fg">
+                                <label for="f-portas">Portas</label>
+                                <select id="f-portas">
+                                    <option>4 Portas</option><option>2 Portas</option>
+                                    <option>3 Portas</option><option>5 Portas</option>
+                                </select>
+                            </div>
+                            <div class="fg">
+                                <label for="f-placa">Final de Placa</label>
+                                <select id="f-placa">
+                                    <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+                                    <option>6</option><option>7</option><option>8</option><option>9</option><option>0</option>
+                                </select>
+                            </div>
+                            <div class="fg">
+                                <label for="f-status">Status do Anúncio</label>
+                                <select id="f-status">
+                                    <option value="ativo">✅ Ativo</option>
+                                    <option value="pause">⏸ Pausado</option>
+                                    <option value="vendido">❌ Vendido</option>
+                                </select>
+                            </div>
+                            <div class="fg">
+                                <label>⭐ Destaque no Site</label>
+                                <div class="destaque-toggle-wrap">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="f-destaque">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                    <span class="toggle-label" id="destaque-label">Não destacado</span>
+                                </div>
+                                <div class="destaque-hint">Apenas 1 veículo pode estar em destaque</div>
+                            </div>
+                        </div>
+                        <div class="form-grid cols1">
+                            <div class="fg">
+                                <label for="f-desc">Descrição / Observações</label>
+                                <textarea id="f-desc" placeholder="Descreva o veículo, histórico, revisões realizadas, diferenciais..."></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-section-title">✨ Opcionais</div>
+                        <div class="optionals-check" id="optionals-container"></div>
+
+                        <div class="form-section-title">📸 Fotos do Veículo</div>
+                        <div class="upload-zone" id="upload-zone">
+                            <span class="upload-icon">📷</span>
+                            <div class="upload-title">Arraste as fotos aqui</div>
+                            <div class="upload-sub">JPG, PNG, WEBP — até 10MB por foto — máximo 12 fotos</div>
+                            <button class="upload-btn" id="btn-upload">Selecionar Fotos do Dispositivo</button>
+                            <input type="file" id="file-input" multiple accept="image/*">
+                        </div>
+                        <div class="photos-preview" id="photos-preview"></div>
+                        <div class="photo-count" id="photo-count"></div>
+
+                        <div class="form-actions">
+                            <button id="btn-limpar">Limpar Formulário</button>
+                            <button id="btn-salvar">💾 Salvar no Estoque</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ESTOQUE -->
+                <div class="page" id="page-estoque">
+                    <div class="card">
+                        <div class="estoque-topbar">
+                            <div class="card-title" style="margin-bottom:0">🚗 Estoque Completo</div>
+                            <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+                                <select id="filter-status-estoque" style="background:var(--dark-4);border:1px solid rgba(201,168,76,.15);color:var(--white);padding:8px 12px;border-radius:6px;font-size:12px;outline:none;font-family:'DM Sans',sans-serif;">
+                                    <option value="">Todos os status</option>
+                                    <option value="ativo">✅ Ativos</option>
+                                    <option value="pause">⏸ Pausados</option>
+                                    <option value="vendido">❌ Vendidos</option>
+                                </select>
+                                <input type="text" id="search-estoque" placeholder="🔍 Buscar veículo...">
+                            </div>
+                        </div>
+                        <div class="stock-list" id="estoque-list"></div>
+                    </div>
+                </div>
+
+                <!-- GALERIA -->
+                <div class="page" id="page-galeria">
+                    <div class="card">
+                        <div class="card-title">📸 Galeria de Fotos por Veículo</div>
+                        <div id="galeria-content"></div>
+                    </div>
+                </div>
+
+                <!-- LEADS / CONTATOS -->
+                <div class="page" id="page-leads">
+                    <div class="leads-topbar">
+                        <div class="card" style="flex:1">
+                            <div class="stats-row">
+                                <div class="lead-stat"><div class="lead-stat-val" id="lead-stat-total">0</div><div class="lead-stat-lbl">Total</div></div>
+                                <div class="lead-stat"><div class="lead-stat-val" id="lead-stat-novos">0</div><div class="lead-stat-lbl">Novos</div></div>
+                                <div class="lead-stat"><div class="lead-stat-val" id="lead-stat-atendidos">0</div><div class="lead-stat-lbl">Atendidos</div></div>
+                                <div class="lead-stat"><div class="lead-stat-val" id="lead-stat-fechados">0</div><div class="lead-stat-lbl">Fechados</div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card" style="margin-top:16px">
+                        <div class="estoque-topbar">
+                            <div class="card-title" style="margin-bottom:0">💬 Contatos e Leads</div>
+                            <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+                                <select id="filter-lead-status" style="background:var(--dark-4);border:1px solid rgba(201,168,76,.15);color:var(--white);padding:8px 12px;border-radius:6px;font-size:12px;outline:none;font-family:'DM Sans',sans-serif;">
+                                    <option value="">Todos</option>
+                                    <option value="novo">🔵 Novos</option>
+                                    <option value="atendido">🟡 Atendidos</option>
+                                    <option value="fechado">🟢 Fechados</option>
+                                    <option value="perdido">🔴 Perdidos</option>
+                                </select>
+                                <button class="upload-btn" id="btn-add-lead" style="margin:0;padding:8px 16px;font-size:11px">+ Adicionar Lead</button>
+                            </div>
+                        </div>
+                        <div id="leads-list"></div>
+                    </div>
+
+                    <!-- Modal de lead -->
+                    <div id="lead-modal" class="modal-overlay" style="display:none">
+                        <div class="modal-box">
+                            <div class="modal-title" id="lead-modal-title">Novo Lead</div>
+                            <div class="form-grid" style="margin-bottom:12px">
+                                <div class="fg">
+                                    <label>Nome *</label>
+                                    <input type="text" id="lead-nome" placeholder="Nome do cliente">
+                                </div>
+                                <div class="fg">
+                                    <label>Telefone</label>
+                                    <input type="text" id="lead-tel" placeholder="(XX) XXXXX-XXXX">
+                                </div>
+                                <div class="fg">
+                                    <label>E-mail</label>
+                                    <input type="email" id="lead-email" placeholder="email@exemplo.com">
+                                </div>
+                                <div class="fg">
+                                    <label>Veículo de Interesse</label>
+                                    <input type="text" id="lead-veiculo" placeholder="Ex: Hyundai Azera">
+                                </div>
+                            </div>
+                            <div class="fg" style="margin-bottom:16px">
+                                <label>Canal de Contato</label>
+                                <select id="lead-canal">
+                                    <option value="whatsapp">💬 WhatsApp</option>
+                                    <option value="telefone">📞 Telefone</option>
+                                    <option value="email">✉️ E-mail</option>
+                                    <option value="site">🌐 Formulário do Site</option>
+                                    <option value="presencial">🏢 Presencial</option>
+                                </select>
+                            </div>
+                            <div class="fg" style="margin-bottom:20px">
+                                <label>Observações</label>
+                                <textarea id="lead-obs" placeholder="Detalhes do contato..." style="min-height:60px"></textarea>
+                            </div>
+                            <div style="display:flex;gap:10px;justify-content:flex-end">
+                                <button class="btn-modal-cancel" id="lead-cancel">Cancelar</button>
+                                <button class="btn-modal-save" id="lead-save">💾 Salvar Lead</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CONFIGURAÇÕES -->
+                <div class="page" id="page-config">
+                    <div class="config-grid">
+                        <!-- Dados da Loja -->
+                        <div class="card">
+                            <div class="card-title">🏢 Dados da Loja</div>
+                            <div class="config-form">
+                                <div class="fg" style="margin-bottom:14px">
+                                    <label>Nome da Loja</label>
+                                    <input type="text" id="cfg-nome" placeholder="Elvis Veículos">
+                                </div>
+                                <div class="fg" style="margin-bottom:14px">
+                                    <label>Slogan / Subtítulo</label>
+                                    <input type="text" id="cfg-slogan" placeholder="Showroom Premium">
+                                </div>
+                                <div class="fg" style="margin-bottom:14px">
+                                    <label>Endereço</label>
+                                    <input type="text" id="cfg-endereco" placeholder="Rua Principal, 123 — Cidade/SP">
+                                </div>
+                                <div class="fg" style="margin-bottom:14px">
+                                    <label>E-mail de Contato</label>
+                                    <input type="email" id="cfg-email" placeholder="contato@elvisveiculos.com.br">
+                                </div>
+                                <div class="fg" style="margin-bottom:14px">
+                                    <label>Horário de Atendimento</label>
+                                    <input type="text" id="cfg-horario" placeholder="Seg–Sex: 9h às 18h | Sab: 9h às 13h">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- WhatsApp -->
+                        <div class="card">
+                            <div class="card-title">💬 WhatsApp</div>
+                            <div class="config-form">
+                                <div class="fg" style="margin-bottom:14px">
+                                    <label>Número do WhatsApp</label>
+                                    <input type="text" id="cfg-wpp" placeholder="5511999999999 (com DDI e DDD)">
+                                </div>
+                                <div class="fg" style="margin-bottom:14px">
+                                    <label>Mensagem Padrão de Boas-Vindas</label>
+                                    <textarea id="cfg-wpp-msg" placeholder="Olá! Vim pelo site da Elvis Veículos e gostaria de mais informações." style="min-height:80px"></textarea>
+                                </div>
+                                <div class="fg" style="margin-bottom:14px">
+                                    <label>Badge do Botão Flutuante (número de msgs não lidas)</label>
+                                    <input type="number" id="cfg-wpp-badge" placeholder="3" min="0" max="99">
+                                </div>
+                                <div class="wpp-preview">
+                                    <div style="font-size:11px;color:var(--gray);margin-bottom:8px;text-transform:uppercase;letter-spacing:1px">Preview do link</div>
+                                    <div id="cfg-wpp-link" style="font-size:12px;color:var(--gold);word-break:break-all">—</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SEO / Meta -->
+                        <div class="card">
+                            <div class="card-title">🔍 SEO &amp; Descrição</div>
+                            <div class="config-form">
+                                <div class="fg" style="margin-bottom:14px">
+                                    <label>Título da Página (SEO)</label>
+                                    <input type="text" id="cfg-seo-title" placeholder="ELVIS VEÍCULOS – Showroom Premium">
+                                </div>
+                                <div class="fg" style="margin-bottom:14px">
+                                    <label>Descrição (meta description)</label>
+                                    <textarea id="cfg-seo-desc" placeholder="Veículos selecionados com procedência garantida..." style="min-height:70px"></textarea>
+                                </div>
+                                <div class="fg" style="margin-bottom:14px">
+                                    <label>Palavras-chave (separadas por vírgula)</label>
+                                    <input type="text" id="cfg-seo-kw" placeholder="carros, veículos, seminovos, loja de carros">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Aparência -->
+                        <div class="card">
+                            <div class="card-title">🎨 Aparência &amp; Site</div>
+                            <div class="config-form">
+                                <div class="fg" style="margin-bottom:14px">
+                                    <label>Frase do Hero (título principal)</label>
+                                    <input type="text" id="cfg-hero-title" placeholder="O Carro dos Seus Sonhos Está Aqui">
+                                </div>
+                                <div class="fg" style="margin-bottom:14px">
+                                    <label>Subtexto do Hero</label>
+                                    <textarea id="cfg-hero-sub" placeholder="Veículos selecionados com procedência garantida..." style="min-height:70px"></textarea>
+                                </div>
+                                <div class="fg" style="margin-bottom:14px">
+                                    <label>Texto do Rodapé (copyright)</label>
+                                    <input type="text" id="cfg-footer" placeholder="© 2026 Elvis Veículos — Todos os direitos reservados">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display:flex;justify-content:flex-end;margin-top:20px">
+                        <button id="btn-save-config" style="background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#000;padding:12px 36px;border-radius:6px;font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;border:none;cursor:pointer;font-family:'DM Sans',sans-serif">
+                            💾 Salvar Configurações
+                        </button>
+                    </div>
+                </div>
+
+            </div><!-- /content -->
+        </div><!-- /main -->
+    </div><!-- /admin-screen -->
+
+    <script src="admin-script.js"></script>
+</body>
+</html>
