@@ -6,18 +6,13 @@
     <title>ELVIS VEÍCULOS – Showroom Premium</title>
     <meta name="description" content="Veículos selecionados com procedência garantida. Financiamento fácil e suporte pós-venda. Conheça nosso showroom virtual.">
     <meta name="keywords" content="carros, veículos, hyundai, toyota, volkswagen, seminovos, loja de carros">
-    <!-- Favicon (placeholder) -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚗</text></svg>">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <!-- CSS principal -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-   <!-- <div class="proto-banner">🚀 PROTÓTIPO — InNovaIdeia × ELVIS VEÍCULOS — Apresentação Premium</div> -->
-
-    <!-- Toast (notificação) -->
-    <div id="toast" class="toast">
+    <!-- Toast -->
+    <div id="toast" class="toast" role="alert" aria-live="assertive">
         <div class="toast-icon">✅</div>
         <div>
             <div class="toast-text"></div>
@@ -26,7 +21,7 @@
     </div>
 
     <!-- WhatsApp flutuante -->
-    <a href="#" class="float-wpp" id="floatWpp">
+    <a href="https://wa.me/5511999999999?text=Olá! Vim pelo site da Elvis Veículos!" class="float-wpp" id="floatWpp" target="_blank">
         💬
         <span class="float-wpp-badge">3</span>
     </a>
@@ -40,13 +35,23 @@
                 <div class="logo-sub">Showroom Premium</div>
             </div>
         </div>
-        <nav aria-label="Navegação principal">
+        <!-- Menu desktop -->
+        <nav class="desktop-nav" aria-label="Navegação principal">
             <a href="#estoque">Estoque</a>
             <a href="#veiculo-destaque">Destaque</a>
             <a href="#sobre">Sobre Nós</a>
             <a href="#contato">Contato</a>
         </nav>
-        <a href="#" class="header-cta" id="headerWppBtn">💬 Fale Conosco</a>
+        <!-- Menu mobile (hamburger) -->
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">☰</button>
+        <div class="mobile-nav" id="mobileNav">
+            <a href="#estoque">Estoque</a>
+            <a href="#veiculo-destaque">Destaque</a>
+            <a href="#sobre">Sobre Nós</a>
+            <a href="#contato">Contato</a>
+            <a href="#" class="mobile-wpp" id="mobileWppBtn">💬 WhatsApp</a>
+        </div>
+        <a href="https://wa.me/5511999999999?text=Olá! Vim pelo site da Elvis Veículos!" class="header-cta" id="headerWppBtn" target="_blank">💬 Fale Conosco</a>
     </header>
 
     <!-- HERO -->
@@ -58,12 +63,12 @@
                 <p class="hero-desc">Veículos selecionados com procedência garantida, revisados e prontos para financiamento. Transparência e qualidade em cada negociação.</p>
                 <div class="hero-actions">
                     <a href="#estoque" class="btn-primary">Ver Estoque Completo</a>
-                    <a href="#" class="btn-secondary" id="heroWppBtn">💬 WhatsApp</a>
+                    <a href="https://wa.me/5511999999999?text=Olá! Vim pelo site da Elvis Veículos!" class="btn-secondary" id="heroWppBtn" target="_blank">💬 WhatsApp</a>
                 </div>
             </div>
             <div class="hero-card">
                 <div class="hero-car-img">
-                    <span class="car-emoji">🚗</span>
+                    <span class="car-emoji" role="img" aria-label="Carro em destaque">🚗</span>
                     <div class="hero-badge">DESTAQUE</div>
                 </div>
                 <div class="hero-stats">
@@ -113,15 +118,14 @@
                         <option>2019</option>
                     </select>
                 </div>
+                <!-- NOVO: filtro de preço com mínimo e máximo -->
                 <div class="filter-group">
-                    <label for="filter-preco">Preço Máximo</label>
-                    <select id="filter-preco">
-                        <option value="">Qualquer</option>
-                        <option>40000</option>
-                        <option>60000</option>
-                        <option>80000</option>
-                        <option>80000+</option>
-                    </select>
+                    <label for="filter-preco-min">Preço Mínimo (R$)</label>
+                    <input type="text" id="filter-preco-min" placeholder="Ex: 50.000">
+                </div>
+                <div class="filter-group">
+                    <label for="filter-preco-max">Preço Máximo (R$)</label>
+                    <input type="text" id="filter-preco-max" placeholder="Ex: 100.000">
                 </div>
                 <div class="filter-group">
                     <label for="filter-cambio">Câmbio</label>
@@ -148,13 +152,13 @@
     <!-- DETALHE DO VEÍCULO (dinâmico) -->
     <section class="detail-section" id="veiculo-destaque">
         <div class="detail-inner" id="detailInner"></div>
-        <!-- Opcionais serão injetados via JS -->
+        <!-- Opcionais agora serão inseridos dentro do detailInner via JS -->
     </section>
 
     <!-- SOBRE A LOJA -->
     <section class="about-section" id="sobre">
         <div class="about-inner">
-            <div class="about-visual">🏢</div>
+            <div class="about-visual" role="img" aria-label="Prédio da loja">🏢</div>
             <div class="about-info">
                 <div class="section-tag">✦ Nossa história</div>
                 <h2 class="section-title">Tradição e Confiança há Mais de 15 Anos</h2>
@@ -197,9 +201,9 @@
                 <a href="#">📍 Rua Principal, 123 — Sua Cidade/SP</a>
                 <a href="#">🕐 Seg–Sex: 9h às 18h | Sab: 9h às 13h</a>
                 <a href="#">📞 (XX) XXXXX-XXXX</a>
-                <a href="#">✉️ <span class="__cf_email__" data-cfemail="d3b0bcbda7b2a7bc93b6bfa5baa0a5b6bab0a6bfbca0fdb0bcbefdb1a1">[email&#160;protected]</span></a>
+                <a href="#">✉️ contato@elvisveiculos.com.br</a>
             </div>
-            <a href="#" class="footer-wpp-btn" id="footerWppBtn">💬 Falar no WhatsApp</a>
+            <a href="https://wa.me/5511999999999?text=Olá! Vim pelo site da Elvis Veículos!" class="footer-wpp-btn" id="footerWppBtn" target="_blank">💬 Falar no WhatsApp</a>
         </div>
         <div class="footer-bottom">
             <p>© 2026 Elvis Veículos — Todos os direitos reservados</p>
@@ -207,69 +211,6 @@
         </div>
     </footer>
 
-    <!-- Acesso Admin (discreto) -->
-    <a href="./admin.html" class="admin-access" title="Painel Administrativo" aria-label="Acesso ao painel administrativo">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="3"/>
-            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-        </svg>
-    </a>
-
-    <style>
-    .admin-access {
-        position: fixed;
-        bottom: 22px;
-        left: 22px;
-        z-index: 900;
-        width: 36px;
-        height: 36px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: rgba(255,255,255,0.1);
-        background: transparent;
-        border-radius: 50%;
-        text-decoration: none;
-        transition: color .4s ease, background .4s ease, transform .5s ease, opacity .4s ease;
-        opacity: 0;
-        pointer-events: auto;
-    }
-    /* Área de ativação invisível maior que o ícone */
-    .admin-access::before {
-        content: '';
-        position: absolute;
-        inset: -14px;
-        border-radius: 50%;
-    }
-    .admin-access:hover {
-        color: rgba(201,168,76,0.9);
-        background: rgba(201,168,76,0.1);
-        transform: rotate(60deg);
-        opacity: 1;
-    }
-    .admin-access:focus-visible {
-        outline: 2px solid rgba(201,168,76,0.5);
-        outline-offset: 4px;
-        opacity: 1;
-        color: rgba(201,168,76,0.9);
-    }
-    .admin-access svg {
-        width: 18px;
-        height: 18px;
-        flex-shrink: 0;
-    }
-    /* Mobile: levemente visível para o admin conseguir tocar */
-    @media (hover: none) {
-        .admin-access { opacity: 0.06; }
-        .admin-access:active {
-            opacity: 1;
-            color: rgba(201,168,76,0.9);
-            transform: rotate(60deg);
-        }
-    }
-    </style>
-
-    <!-- JavaScript principal -->
     <script src="./script.js"></script>
 </body>
 </html>
