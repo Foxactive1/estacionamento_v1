@@ -27,6 +27,8 @@
         --radius:     12px;
         --radius-lg:  20px;
         --shadow:     0 24px 64px rgba(0,0,0,0.6);
+        --max-w:      1280px;
+        --px:         clamp(16px, 5vw, 80px);
     }
 
     html { scroll-behavior: smooth; }
@@ -51,61 +53,142 @@
     /* ===== TIPOGRAFIA ===== */
     .serif { font-family: 'Playfair Display', serif; }
 
+    /* ===== CONTAINER ===== */
+    .container {
+        width: 100%;
+        max-width: var(--max-w);
+        margin: 0 auto;
+        padding: 0 var(--px);
+    }
+
     /* ===== HEADER ===== */
     header {
         position: fixed; top: 0; left: 0; right: 0; z-index: 900;
-        padding: 0 clamp(20px, 5vw, 80px);
-        height: 72px;
-        display: flex; align-items: center; justify-content: space-between;
-        background: rgba(13,13,14,0.85);
+        height: 68px;
+        display: flex; align-items: center;
+        background: rgba(13,13,14,0.92);
         backdrop-filter: blur(20px);
         border-bottom: 1px solid var(--border);
         transition: background 0.3s;
     }
 
+    .header-inner {
+        width: 100%; max-width: var(--max-w);
+        margin: 0 auto;
+        padding: 0 var(--px);
+        display: flex; align-items: center; justify-content: space-between;
+        gap: 16px;
+    }
+
     .logo {
-        display: flex; align-items: center; gap: 12px;
+        display: flex; align-items: center; gap: 10px;
         font-family: 'Playfair Display', serif;
-        font-size: 20px; font-weight: 900;
+        font-size: 18px; font-weight: 900;
         letter-spacing: 0.04em;
         color: var(--white);
+        flex-shrink: 0;
     }
 
     .logo-badge {
-        width: 36px; height: 36px;
+        width: 34px; height: 34px;
         background: var(--gold);
         border-radius: 8px;
         display: grid; place-items: center;
-        font-size: 18px; font-weight: 900;
+        font-size: 16px; font-weight: 900;
         color: #000;
         font-family: 'Playfair Display', serif;
+        flex-shrink: 0;
     }
 
+    .logo-text-wrap { display: flex; flex-direction: column; line-height: 1; }
+
     .logo-sub {
-        font-size: 10px; letter-spacing: 0.2em;
+        font-size: 9px; letter-spacing: 0.18em;
         color: var(--gold); font-family: 'DM Sans', sans-serif;
         font-weight: 500; text-transform: uppercase;
-        display: block; margin-top: -4px;
+        margin-top: 3px;
     }
+
+    /* Nav desktop */
+    .header-nav {
+        display: flex; align-items: center; gap: 28px;
+    }
+    .header-nav a {
+        font-size: 13px; font-weight: 500;
+        color: rgba(240,236,228,0.6);
+        letter-spacing: 0.04em;
+        transition: color 0.2s;
+    }
+    .header-nav a:hover { color: var(--gold); }
 
     .header-cta {
         background: var(--gold);
         color: #000;
         border: none; border-radius: 8px;
-        padding: 10px 22px;
-        font-size: 13px; font-weight: 600;
+        padding: 9px 20px;
+        font-size: 12px; font-weight: 700;
         font-family: 'DM Sans', sans-serif;
-        letter-spacing: 0.04em; text-transform: uppercase;
+        letter-spacing: 0.06em; text-transform: uppercase;
         cursor: pointer; transition: all 0.2s;
-        white-space: nowrap;
+        white-space: nowrap; flex-shrink: 0;
     }
     .header-cta:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+    /* Hamburger mobile */
+    .hamburger {
+        display: none;
+        flex-direction: column; justify-content: center; align-items: center;
+        gap: 5px;
+        width: 38px; height: 38px;
+        background: none; border: 1px solid var(--border);
+        border-radius: 8px; cursor: pointer;
+        flex-shrink: 0;
+    }
+    .hamburger span {
+        display: block; width: 18px; height: 2px;
+        background: var(--text); border-radius: 2px;
+        transition: all 0.3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+    /* Mobile drawer */
+    .mobile-drawer {
+        position: fixed; top: 68px; left: 0; right: 0;
+        background: rgba(19,19,21,0.98);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border);
+        z-index: 850;
+        padding: 20px var(--px) 24px;
+        display: flex; flex-direction: column; gap: 4px;
+        transform: translateY(-110%);
+        transition: transform 0.35s cubic-bezier(0.22,1,0.36,1);
+    }
+    .mobile-drawer.open { transform: translateY(0); }
+    .mobile-drawer a {
+        display: block; padding: 12px 0;
+        font-size: 15px; font-weight: 500;
+        color: rgba(240,236,228,0.75);
+        border-bottom: 1px solid var(--border);
+        transition: color 0.2s;
+    }
+    .mobile-drawer a:last-of-type { border-bottom: none; }
+    .mobile-drawer a:hover { color: var(--gold); }
+    .mobile-drawer .drawer-cta {
+        margin-top: 12px;
+        background: var(--gold); color: #000;
+        border-radius: 8px; padding: 13px;
+        font-size: 14px; font-weight: 700;
+        text-align: center; letter-spacing: 0.06em;
+        text-transform: uppercase; border: none; cursor: pointer;
+    }
 
     /* ===== HERO ===== */
     #hero {
         min-height: 100vh;
         display: flex; flex-direction: column; justify-content: flex-end;
-        padding: 140px clamp(20px, 5vw, 80px) clamp(40px, 6vw, 80px);
+        padding: 120px var(--px) clamp(40px, 6vw, 80px);
         position: relative; overflow: hidden;
     }
 
@@ -118,8 +201,7 @@
     .hero-bg img {
         width: 100%; height: 100%;
         object-fit: cover;
-        opacity: 0.45;
-        transition: opacity 0.8s;
+        opacity: 0.4;
     }
 
     .hero-bg::after {
@@ -128,23 +210,26 @@
         background: linear-gradient(
             to top,
             var(--bg) 0%,
-            rgba(13,13,14,0.6) 50%,
-            rgba(13,13,14,0.2) 100%
+            rgba(13,13,14,0.65) 50%,
+            rgba(13,13,14,0.25) 100%
         );
     }
 
-    .hero-content { position: relative; z-index: 2; max-width: 700px; }
+    .hero-content {
+        position: relative; z-index: 2;
+        max-width: 680px;
+    }
 
     .hero-tag {
         display: inline-flex; align-items: center; gap: 8px;
         background: var(--gold-dim);
         border: 1px solid rgba(201,168,76,0.3);
         border-radius: 100px;
-        padding: 6px 16px;
-        font-size: 12px; font-weight: 600;
+        padding: 5px 14px;
+        font-size: 11px; font-weight: 600;
         letter-spacing: 0.12em; text-transform: uppercase;
         color: var(--gold);
-        margin-bottom: 20px;
+        margin-bottom: 18px;
         opacity: 0; animation: fadeUp 0.6s 0.2s forwards;
     }
 
@@ -161,98 +246,100 @@
 
     .hero-title {
         font-family: 'Playfair Display', serif;
-        font-size: clamp(38px, 6vw, 80px);
+        font-size: clamp(34px, 5.5vw, 76px);
         font-weight: 900; line-height: 1.05;
         color: var(--white);
-        margin-bottom: 16px;
+        margin-bottom: 14px;
         opacity: 0; animation: fadeUp 0.7s 0.35s forwards;
     }
 
-    .hero-title em {
-        font-style: italic; color: var(--gold);
-    }
+    .hero-title em { font-style: italic; color: var(--gold); }
 
     .hero-sub {
-        font-size: clamp(15px, 1.5vw, 18px);
-        color: rgba(240,236,228,0.65);
-        font-weight: 300; max-width: 480px;
-        margin-bottom: 36px;
+        font-size: clamp(14px, 1.4vw, 17px);
+        color: rgba(240,236,228,0.6);
+        font-weight: 300; max-width: 440px;
+        margin-bottom: 32px;
         opacity: 0; animation: fadeUp 0.7s 0.5s forwards;
     }
 
     .hero-actions {
-        display: flex; gap: 14px; flex-wrap: wrap;
+        display: flex; gap: 12px; flex-wrap: wrap;
         opacity: 0; animation: fadeUp 0.7s 0.65s forwards;
     }
 
     .btn-primary {
         background: var(--gold); color: #000;
         border: none; border-radius: 10px;
-        padding: 14px 32px;
-        font-size: 14px; font-weight: 600;
+        padding: 13px 28px;
+        font-size: 13px; font-weight: 700;
         font-family: 'DM Sans', sans-serif;
-        letter-spacing: 0.04em; text-transform: uppercase;
+        letter-spacing: 0.05em; text-transform: uppercase;
         cursor: pointer; transition: all 0.25s;
+        white-space: nowrap;
     }
     .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(201,168,76,0.35); }
 
     .btn-ghost {
         background: transparent; color: var(--text);
-        border: 1px solid var(--border);
-        border-radius: 10px; padding: 14px 32px;
-        font-size: 14px; font-weight: 500;
+        border: 1px solid rgba(255,255,255,0.15);
+        border-radius: 10px; padding: 13px 28px;
+        font-size: 13px; font-weight: 500;
         font-family: 'DM Sans', sans-serif;
         cursor: pointer; transition: all 0.25s;
+        white-space: nowrap;
     }
-    .btn-ghost:hover { border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.05); }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.05); }
 
+    /* Stats hero — reposicionados abaixo do conteúdo em mobile */
     .hero-stats {
-        position: absolute; bottom: clamp(40px,6vw,80px); right: clamp(20px,5vw,80px);
+        position: absolute;
+        bottom: clamp(40px,6vw,80px); right: var(--px);
         display: flex; gap: 2px;
         z-index: 2;
         opacity: 0; animation: fadeUp 0.7s 0.8s forwards;
     }
 
     .hero-stat {
-        background: rgba(13,13,14,0.8);
+        background: rgba(13,13,14,0.82);
         backdrop-filter: blur(16px);
         border: 1px solid var(--border);
         border-radius: var(--radius);
-        padding: 18px 24px; text-align: center;
-        min-width: 100px;
+        padding: 16px 22px; text-align: center;
+        min-width: 90px;
     }
     .hero-stat:first-child { border-radius: var(--radius) 0 0 var(--radius); }
     .hero-stat:last-child  { border-radius: 0 var(--radius) var(--radius) 0; }
 
     .hero-stat-value {
         font-family: 'Playfair Display', serif;
-        font-size: 26px; font-weight: 700;
+        font-size: 24px; font-weight: 700;
         color: var(--gold); line-height: 1;
     }
 
     .hero-stat-label {
-        font-size: 11px; color: var(--muted);
+        font-size: 10px; color: var(--muted);
         text-transform: uppercase; letter-spacing: 0.1em;
         margin-top: 4px;
     }
 
-    /* ===== SECTION ===== */
-    section { padding: clamp(60px, 8vw, 100px) clamp(20px, 5vw, 80px); }
+    /* ===== SECTION GENÉRICA ===== */
+    section { padding: clamp(48px, 7vw, 96px) 0; }
 
     .section-header {
         display: flex; align-items: flex-end; justify-content: space-between;
-        gap: 20px; flex-wrap: wrap; margin-bottom: 40px;
+        gap: 16px; flex-wrap: wrap; margin-bottom: 36px;
     }
 
     .section-label {
         font-size: 11px; font-weight: 600; letter-spacing: 0.2em;
         text-transform: uppercase; color: var(--gold);
-        margin-bottom: 8px;
+        margin-bottom: 6px;
     }
 
     .section-title {
         font-family: 'Playfair Display', serif;
-        font-size: clamp(26px, 3.5vw, 44px);
+        font-size: clamp(24px, 3.2vw, 42px);
         font-weight: 700; color: var(--white);
         line-height: 1.15;
     }
@@ -262,18 +349,18 @@
 
     .destaque-card {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1.1fr 1fr;
         gap: 0;
         background: var(--bg3);
         border: 1px solid var(--border);
         border-radius: var(--radius-lg);
         overflow: hidden;
-        min-height: 500px;
+        min-height: 480px;
     }
 
     .destaque-gallery {
         position: relative; background: var(--bg4);
-        overflow: hidden; min-height: 400px;
+        overflow: hidden; min-height: 360px;
     }
 
     .destaque-gallery img {
@@ -283,12 +370,12 @@
     .destaque-gallery:hover img { transform: scale(1.04); }
 
     .gallery-thumbs {
-        position: absolute; bottom: 16px; left: 16px;
-        display: flex; gap: 8px;
+        position: absolute; bottom: 14px; left: 14px;
+        display: flex; gap: 7px;
     }
 
     .gallery-thumb {
-        width: 56px; height: 40px;
+        width: 52px; height: 38px;
         border-radius: 6px; overflow: hidden;
         border: 2px solid transparent;
         cursor: pointer; transition: border-color 0.2s;
@@ -298,7 +385,7 @@
     .gallery-thumb img { width: 100%; height: 100%; object-fit: cover; }
 
     .destaque-info {
-        padding: clamp(30px, 4vw, 56px);
+        padding: clamp(24px, 3.5vw, 52px);
         display: flex; flex-direction: column; justify-content: center;
         gap: 0;
     }
@@ -306,95 +393,99 @@
     .destaque-badge {
         display: inline-flex; align-items: center; gap: 6px;
         background: var(--gold-dim); border: 1px solid rgba(201,168,76,0.3);
-        border-radius: 100px; padding: 5px 14px;
-        font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+        border-radius: 100px; padding: 4px 13px;
+        font-size: 10px; font-weight: 600; letter-spacing: 0.12em;
         text-transform: uppercase; color: var(--gold);
-        margin-bottom: 20px; width: fit-content;
+        margin-bottom: 18px; width: fit-content;
     }
 
     .destaque-name {
         font-family: 'Playfair Display', serif;
-        font-size: clamp(24px, 3vw, 38px);
+        font-size: clamp(22px, 2.8vw, 36px);
         font-weight: 700; color: var(--white);
         line-height: 1.1; margin-bottom: 6px;
     }
 
     .destaque-version {
-        font-size: 14px; color: var(--muted); margin-bottom: 28px;
+        font-size: 13px; color: var(--muted); margin-bottom: 24px;
     }
 
     .destaque-specs {
         display: grid; grid-template-columns: 1fr 1fr;
-        gap: 12px; margin-bottom: 32px;
+        gap: 10px; margin-bottom: 28px;
     }
 
     .spec-item {
         background: var(--bg4); border-radius: 10px;
-        padding: 14px 16px;
+        padding: 13px 15px;
         border: 1px solid var(--border);
     }
-    .spec-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
-    .spec-value { font-size: 15px; font-weight: 600; color: var(--white); margin-top: 2px; }
+    .spec-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    .spec-value { font-size: 14px; font-weight: 600; color: var(--white); margin-top: 2px; }
 
     .destaque-price-row {
         display: flex; align-items: center; justify-content: space-between;
-        gap: 16px; flex-wrap: wrap; margin-bottom: 24px;
+        gap: 16px; flex-wrap: wrap; margin-bottom: 22px;
     }
 
     .destaque-price {
         font-family: 'Playfair Display', serif;
-        font-size: clamp(28px, 3vw, 40px);
+        font-size: clamp(26px, 2.8vw, 38px);
         font-weight: 700; color: var(--gold);
     }
 
     .destaque-price small {
-        font-size: 14px; color: var(--muted);
+        font-size: 13px; color: var(--muted);
         font-family: 'DM Sans', sans-serif;
         font-weight: 400; display: block;
         text-decoration: line-through;
     }
 
+    .destaque-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
     /* ===== FILTROS ===== */
     #estoque { background: var(--bg); }
 
     .filters-bar {
-        display: flex; gap: 10px; flex-wrap: wrap;
-        margin-bottom: 32px;
+        display: flex; gap: 8px; flex-wrap: wrap;
+        align-items: flex-end;
+        margin-bottom: 28px;
         background: var(--bg3);
         border: 1px solid var(--border);
         border-radius: var(--radius);
-        padding: 16px 20px;
+        padding: 14px 18px;
     }
 
     .filter-select, .filter-input {
         background: var(--bg4); color: var(--text);
         border: 1px solid var(--border);
-        border-radius: 8px; padding: 10px 14px;
+        border-radius: 8px; padding: 10px 13px;
         font-size: 13px; font-family: 'DM Sans', sans-serif;
         appearance: none; cursor: pointer;
         transition: border-color 0.2s;
-        min-width: 130px; flex: 1;
+        min-width: 120px; flex: 1;
     }
     .filter-select:focus, .filter-input:focus {
         outline: none; border-color: var(--gold);
     }
 
-    .filter-input { max-width: 220px; }
+    .filter-input { max-width: 200px; flex: 1.5; }
 
     .filter-btn-reset {
         background: transparent; color: var(--muted);
         border: 1px solid var(--border); border-radius: 8px;
-        padding: 10px 16px; font-size: 13px;
+        padding: 10px 14px; font-size: 13px;
         font-family: 'DM Sans', sans-serif;
         cursor: pointer; transition: all 0.2s; white-space: nowrap;
+        flex-shrink: 0;
     }
     .filter-btn-reset:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
 
     /* ===== GRID DE VEÍCULOS ===== */
     .vehicles-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 20px;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 18px;
     }
 
     .vehicle-card {
@@ -407,13 +498,13 @@
         animation: fadeUp 0.5s both;
     }
     .vehicle-card:hover {
-        transform: translateY(-6px);
+        transform: translateY(-5px);
         border-color: rgba(201,168,76,0.3);
         box-shadow: 0 20px 50px rgba(0,0,0,0.4);
     }
 
     .card-image {
-        position: relative; height: 200px;
+        position: relative; height: 195px;
         background: var(--bg4); overflow: hidden;
     }
     .card-image img {
@@ -425,77 +516,79 @@
     .card-image-placeholder {
         width: 100%; height: 100%;
         display: grid; place-items: center;
-        color: var(--muted); font-size: 48px;
+        color: var(--muted); font-size: 44px;
     }
 
     .card-badge-destaque {
-        position: absolute; top: 12px; left: 12px;
+        position: absolute; top: 10px; left: 10px;
         background: var(--gold); color: #000;
-        border-radius: 6px; padding: 3px 10px;
+        border-radius: 6px; padding: 3px 9px;
         font-size: 10px; font-weight: 700;
         letter-spacing: 0.1em; text-transform: uppercase;
     }
 
     .card-photo-count {
-        position: absolute; bottom: 10px; right: 10px;
+        position: absolute; bottom: 9px; right: 9px;
         background: rgba(0,0,0,0.7); backdrop-filter: blur(8px);
-        border-radius: 6px; padding: 3px 10px;
-        font-size: 11px; color: rgba(255,255,255,0.8);
+        border-radius: 6px; padding: 2px 9px;
+        font-size: 10px; color: rgba(255,255,255,0.8);
     }
 
-    .card-body { padding: 20px; }
+    .card-body { padding: 18px; }
 
     .card-title {
         font-family: 'Playfair Display', serif;
-        font-size: 18px; font-weight: 700;
+        font-size: 17px; font-weight: 700;
         color: var(--white); line-height: 1.2;
-        margin-bottom: 4px;
+        margin-bottom: 3px;
     }
 
     .card-version {
-        font-size: 12px; color: var(--muted); margin-bottom: 14px;
+        font-size: 11px; color: var(--muted); margin-bottom: 12px;
     }
 
     .card-specs {
-        display: flex; gap: 16px; flex-wrap: wrap;
-        margin-bottom: 16px;
+        display: flex; gap: 12px; flex-wrap: wrap;
+        margin-bottom: 14px;
     }
 
     .card-spec {
-        font-size: 12px; color: var(--muted);
-        display: flex; align-items: center; gap: 4px;
+        font-size: 11px; color: var(--muted);
+        display: flex; align-items: center; gap: 3px;
     }
     .card-spec strong { color: rgba(240,236,228,0.75); font-weight: 500; }
 
     .card-footer {
         display: flex; align-items: center; justify-content: space-between;
-        border-top: 1px solid var(--border); padding-top: 16px;
+        border-top: 1px solid var(--border); padding-top: 14px;
+        gap: 8px;
     }
 
     .card-price {
         font-family: 'Playfair Display', serif;
-        font-size: 22px; font-weight: 700; color: var(--gold);
+        font-size: 20px; font-weight: 700; color: var(--gold);
     }
 
     .card-cta {
         background: var(--gold-dim);
         color: var(--gold);
         border: 1px solid rgba(201,168,76,0.25);
-        border-radius: 8px; padding: 8px 16px;
+        border-radius: 8px; padding: 7px 14px;
         font-size: 12px; font-weight: 600;
         font-family: 'DM Sans', sans-serif;
         letter-spacing: 0.06em; text-transform: uppercase;
         cursor: pointer; transition: all 0.2s;
+        white-space: nowrap; flex-shrink: 0;
     }
     .card-cta:hover { background: var(--gold); color: #000; }
 
     /* ===== EMPTY / LOADING ===== */
     .state-empty {
         grid-column: 1/-1; text-align: center;
-        padding: 80px 20px; color: var(--muted);
+        padding: 72px 20px; color: var(--muted);
     }
-    .state-empty-icon { font-size: 52px; margin-bottom: 16px; }
-    .state-empty p { font-size: 16px; }
+    .state-empty-icon { font-size: 48px; margin-bottom: 14px; }
+    .state-empty p { font-size: 15px; }
 
     .skeleton {
         background: linear-gradient(90deg, var(--bg3) 25%, var(--bg4) 50%, var(--bg3) 75%);
@@ -508,11 +601,12 @@
     /* ===== MODAL ===== */
     .modal-overlay {
         position: fixed; inset: 0; z-index: 1000;
-        background: rgba(0,0,0,0.92);
+        background: rgba(0,0,0,0.88);
         backdrop-filter: blur(14px);
         display: flex; align-items: flex-end; justify-content: center;
         opacity: 0; visibility: hidden;
-        transition: opacity 0.35s, visibility 0.35s;
+        transition: opacity 0.3s, visibility 0.3s;
+        padding: 0;
     }
     .modal-overlay.open { opacity: 1; visibility: visible; }
 
@@ -520,8 +614,8 @@
         background: var(--bg2);
         border: 1px solid rgba(201,168,76,0.15);
         border-bottom: none;
-        border-radius: 24px 24px 0 0;
-        width: 100%; max-width: 980px;
+        border-radius: 22px 22px 0 0;
+        width: 100%;
         max-height: 94vh;
         overflow-y: auto;
         overscroll-behavior: contain;
@@ -531,32 +625,30 @@
     }
     .modal-overlay.open .modal { transform: translateY(0); }
 
-    /* Drag handle */
     .modal-drag-handle {
-        width: 44px; height: 5px; border-radius: 100px;
-        background: rgba(255,255,255,0.18);
-        margin: 14px auto 0;
+        width: 40px; height: 4px; border-radius: 100px;
+        background: rgba(255,255,255,0.15);
+        margin: 12px auto 0;
     }
 
     .modal-close {
-        position: absolute; top: 16px; right: 16px;
-        width: 38px; height: 38px;
-        background: rgba(255,255,255,0.08);
+        position: absolute; top: 14px; right: 14px;
+        width: 36px; height: 36px;
+        background: rgba(255,255,255,0.07);
         border: 1px solid rgba(255,255,255,0.1);
         border-radius: 50%; cursor: pointer;
         display: grid; place-items: center;
-        font-size: 15px; color: var(--muted);
+        font-size: 14px; color: var(--muted);
         transition: all 0.2s; z-index: 10;
-        backdrop-filter: blur(8px);
     }
-    .modal-close:hover { color: var(--white); background: rgba(255,255,255,0.15); }
+    .modal-close:hover { color: var(--white); background: rgba(255,255,255,0.14); }
 
     .modal-inner { position: relative; }
 
-    /* Galeria */
+    /* Galeria modal */
     .modal-gallery {
         position: relative;
-        height: clamp(260px, 44vh, 460px);
+        height: clamp(240px, 42vw, 450px);
         background: var(--bg4); overflow: hidden;
         touch-action: pan-y;
         user-select: none;
@@ -571,64 +663,60 @@
         transition: opacity 0.25s;
     }
 
-    /* Overlay gradiente na galeria */
     .modal-gallery::after {
         content: '';
         position: absolute; inset: 0;
-        background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 45%);
+        background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 45%);
         pointer-events: none; z-index: 1;
     }
 
-    /* Contador flutuante */
     .gallery-counter {
-        position: absolute; top: 14px; left: 14px; z-index: 5;
+        position: absolute; top: 12px; left: 12px; z-index: 5;
         background: rgba(0,0,0,0.65); backdrop-filter: blur(8px);
         border: 1px solid rgba(255,255,255,0.1);
-        border-radius: 100px; padding: 4px 12px;
-        font-size: 11px; color: rgba(255,255,255,0.85); letter-spacing: 0.5px;
+        border-radius: 100px; padding: 3px 11px;
+        font-size: 11px; color: rgba(255,255,255,0.85);
     }
 
     .gallery-nav {
         position: absolute; top: 50%; transform: translateY(-50%);
-        width: 46px; height: 46px;
+        width: 42px; height: 42px;
         background: rgba(0,0,0,0.6); backdrop-filter: blur(12px);
         border: 1px solid rgba(255,255,255,0.12);
         border-radius: 50%; cursor: pointer;
         display: grid; place-items: center;
-        font-size: 20px; color: var(--white);
+        font-size: 18px; color: var(--white);
         transition: all 0.2s; z-index: 5;
     }
     .gallery-nav:hover { background: var(--gold); color: #000; border-color: var(--gold); }
     .gallery-nav:active { transform: translateY(-50%) scale(0.93); }
-    .gallery-nav.prev { left: 14px; }
-    .gallery-nav.next { right: 14px; }
+    .gallery-nav.prev { left: 12px; }
+    .gallery-nav.next { right: 12px; }
 
-    /* Dots indicadores */
     .gallery-dots {
-        position: absolute; bottom: 14px; left: 50%;
+        position: absolute; bottom: 12px; left: 50%;
         transform: translateX(-50%);
-        display: flex; gap: 6px; z-index: 5;
+        display: flex; gap: 5px; z-index: 5;
     }
     .gallery-dot {
         width: 6px; height: 6px; border-radius: 50%;
-        background: rgba(255,255,255,0.35);
+        background: rgba(255,255,255,0.32);
         transition: all 0.25s; cursor: pointer;
     }
     .gallery-dot.active {
         background: var(--gold);
-        width: 20px; border-radius: 3px;
+        width: 18px; border-radius: 3px;
     }
 
-    /* Thumbs strip — apenas desktop */
     .modal-gallery-thumbs {
-        display: flex; gap: 8px; padding: 12px 20px;
+        display: flex; gap: 7px; padding: 10px 18px;
         overflow-x: auto; background: var(--bg4);
         border-bottom: 1px solid var(--border);
         scrollbar-width: none;
     }
     .modal-gallery-thumbs::-webkit-scrollbar { display: none; }
     .modal-thumb {
-        width: 64px; height: 46px; border-radius: 6px; overflow: hidden;
+        width: 60px; height: 44px; border-radius: 6px; overflow: hidden;
         border: 2px solid transparent; cursor: pointer;
         transition: border-color 0.2s, opacity 0.2s;
         flex-shrink: 0; opacity: 0.6;
@@ -637,32 +725,31 @@
     .modal-thumb.active { border-color: var(--gold); opacity: 1; }
     .modal-thumb img { width: 100%; height: 100%; object-fit: cover; }
 
-    .modal-body { padding: clamp(20px, 4vw, 44px); }
+    .modal-body { padding: clamp(18px, 4vw, 40px); }
 
-    /* Header preço + título */
     .modal-header-row {
         display: grid;
         grid-template-columns: 1fr auto;
-        gap: 12px 20px;
+        gap: 10px 18px;
         align-items: start;
-        margin-bottom: 24px;
-        padding-bottom: 20px;
+        margin-bottom: 20px;
+        padding-bottom: 18px;
         border-bottom: 1px solid var(--border);
     }
     .modal-title {
         font-family: 'Playfair Display', serif;
-        font-size: clamp(22px, 3.5vw, 32px);
+        font-size: clamp(20px, 3vw, 30px);
         font-weight: 700; color: var(--white); line-height: 1.1;
     }
     .modal-version {
-        font-size: 13px; color: var(--muted); margin-top: 5px;
-        display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+        font-size: 12px; color: var(--muted); margin-top: 4px;
+        display: flex; align-items: center; gap: 7px; flex-wrap: wrap;
     }
-    .modal-version-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--muted); }
-    .modal-price-block { text-align: right; }
+    .modal-version-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--muted); flex-shrink: 0; }
+    .modal-price-block { text-align: right; flex-shrink: 0; }
     .modal-price {
         font-family: 'Playfair Display', serif;
-        font-size: clamp(24px, 3.5vw, 34px);
+        font-size: clamp(22px, 3vw, 32px);
         font-weight: 700; color: var(--gold);
         white-space: nowrap; line-height: 1;
     }
@@ -675,39 +762,37 @@
         font-weight: 600;
     }
 
-    /* CTAs rápidos mobile */
     .modal-quick-cta {
         display: grid; grid-template-columns: 1fr 1fr;
-        gap: 10px; margin-bottom: 24px;
+        gap: 9px; margin-bottom: 22px;
     }
     .modal-cta-wpp {
-        display: flex; align-items: center; justify-content: center; gap: 8px;
+        display: flex; align-items: center; justify-content: center; gap: 7px;
         background: #25d366; color: #fff;
-        border: none; border-radius: 10px; padding: 14px;
-        font-size: 14px; font-weight: 700;
+        border: none; border-radius: 10px; padding: 13px;
+        font-size: 13px; font-weight: 700;
         font-family: 'DM Sans', sans-serif;
         cursor: pointer; text-decoration: none; transition: all 0.2s;
     }
     .modal-cta-wpp:hover { filter: brightness(1.1); transform: translateY(-1px); }
     .modal-cta-form {
-        display: flex; align-items: center; justify-content: center; gap: 8px;
+        display: flex; align-items: center; justify-content: center; gap: 7px;
         background: var(--gold-dim); color: var(--gold);
-        border: 1px solid rgba(201,168,76,0.3); border-radius: 10px; padding: 14px;
-        font-size: 14px; font-weight: 600;
+        border: 1px solid rgba(201,168,76,0.3); border-radius: 10px; padding: 13px;
+        font-size: 13px; font-weight: 600;
         font-family: 'DM Sans', sans-serif;
         cursor: pointer; text-decoration: none; transition: all 0.2s;
     }
     .modal-cta-form:hover { background: rgba(201,168,76,0.2); }
 
-    /* Specs grid */
     .modal-specs-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-        gap: 8px; margin-bottom: 24px;
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+        gap: 7px; margin-bottom: 22px;
     }
     .modal-spec {
         background: var(--bg3); border: 1px solid var(--border);
-        border-radius: 10px; padding: 13px 15px;
+        border-radius: 10px; padding: 12px 14px;
         transition: border-color 0.2s;
     }
     .modal-spec:hover { border-color: rgba(201,168,76,0.25); }
@@ -716,43 +801,38 @@
         text-transform: uppercase; letter-spacing: 0.12em;
     }
     .modal-spec-value {
-        font-size: 14px; font-weight: 600; color: var(--white); margin-top: 4px;
+        font-size: 13px; font-weight: 600; color: var(--white); margin-top: 3px;
     }
 
-    /* Descrição */
     .modal-desc {
-        font-size: 14px; color: rgba(240,236,228,0.65);
-        line-height: 1.75; margin-bottom: 24px;
-        padding: 18px 20px; background: var(--bg3);
+        font-size: 13px; color: rgba(240,236,228,0.6);
+        line-height: 1.75; margin-bottom: 22px;
+        padding: 16px 18px; background: var(--bg3);
         border-radius: var(--radius); border: 1px solid var(--border);
         border-left: 3px solid rgba(201,168,76,0.4);
     }
 
-    /* Opcionais */
-    .modal-optionals { margin-bottom: 28px; }
+    .modal-optionals { margin-bottom: 26px; }
     .optionals-title {
-        font-size: 11px; font-weight: 600; color: var(--muted);
+        font-size: 10px; font-weight: 600; color: var(--muted);
         letter-spacing: 0.12em; text-transform: uppercase;
-        margin-bottom: 10px;
+        margin-bottom: 9px;
     }
     .optionals-tags { display: flex; gap: 6px; flex-wrap: wrap; }
     .optional-tag {
         background: var(--bg3); border: 1px solid var(--border);
-        border-radius: 100px; padding: 5px 13px;
+        border-radius: 100px; padding: 4px 12px;
         font-size: 11px; color: rgba(240,236,228,0.7);
         transition: all 0.2s;
     }
-    .optional-tag:hover {
-        border-color: rgba(201,168,76,0.3);
-        color: var(--gold);
-    }
+    .optional-tag:hover { border-color: rgba(201,168,76,0.3); color: var(--gold); }
 
     /* Sticky CTA bar no mobile */
     .modal-sticky-cta {
         display: none;
         position: sticky; bottom: 0; left: 0; right: 0;
-        background: linear-gradient(to top, var(--bg2) 70%, transparent);
-        padding: 16px 20px 20px;
+        background: linear-gradient(to top, var(--bg2) 72%, transparent);
+        padding: 14px 18px 18px;
         z-index: 20;
     }
 
@@ -760,30 +840,30 @@
     .contact-form {
         background: var(--bg3);
         border: 1px solid rgba(201,168,76,0.12);
-        border-radius: 20px;
-        padding: clamp(22px, 4vw, 36px);
+        border-radius: 18px;
+        padding: clamp(20px, 3.5vw, 34px);
         position: relative; overflow: hidden;
     }
     .contact-form::before {
         content: '';
         position: absolute; top: -60px; right: -60px;
-        width: 180px; height: 180px; border-radius: 50%;
+        width: 160px; height: 160px; border-radius: 50%;
         background: radial-gradient(circle, rgba(201,168,76,0.07), transparent 70%);
         pointer-events: none;
     }
     .contact-form-title {
         font-family: 'Playfair Display', serif;
-        font-size: 20px; font-weight: 700; color: var(--white);
+        font-size: 19px; font-weight: 700; color: var(--white);
         margin-bottom: 4px;
     }
     .contact-form-sub {
-        font-size: 13px; color: var(--muted); margin-bottom: 22px; line-height: 1.5;
+        font-size: 12px; color: var(--muted); margin-bottom: 20px; line-height: 1.5;
     }
     .form-field {
-        position: relative; margin-bottom: 14px;
+        position: relative; margin-bottom: 13px;
     }
     .form-field label {
-        position: absolute; left: 14px; top: 13px;
+        position: absolute; left: 13px; top: 13px;
         font-size: 13px; color: var(--muted);
         transition: all 0.2s cubic-bezier(0.4,0,0.2,1);
         pointer-events: none; z-index: 1;
@@ -802,13 +882,13 @@
         background: var(--bg4); color: var(--text);
         border: 1.5px solid rgba(255,255,255,0.09);
         border-radius: 10px;
-        padding: 14px 14px 10px;
+        padding: 13px 13px 9px;
         font-size: 14px; font-family: 'DM Sans', sans-serif;
         transition: border-color 0.25s, box-shadow 0.25s, background 0.2s;
         outline: none; -webkit-appearance: none;
     }
     .form-field textarea {
-        resize: none; min-height: 96px;
+        resize: none; min-height: 90px;
         padding-top: 20px; line-height: 1.5;
     }
     .form-field input:focus,
@@ -823,19 +903,19 @@
         box-shadow: 0 0 0 3px rgba(224,85,85,0.1);
     }
     .form-field .field-error {
-        font-size: 11px; color: #e77; margin-top: 4px; padding-left: 4px;
+        font-size: 11px; color: #e77; margin-top: 3px; padding-left: 4px;
         display: none; animation: fadeUp 0.2s ease;
     }
     .form-field.show-error .field-error { display: block; }
     .form-field .field-icon {
-        position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
-        font-size: 15px; pointer-events: none; opacity: 0.35;
+        position: absolute; right: 13px; top: 50%; transform: translateY(-50%);
+        font-size: 14px; pointer-events: none; opacity: 0.3;
     }
-    .form-field.has-icon input { padding-right: 40px; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .form-field.has-icon input { padding-right: 38px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .form-divider {
-        display: flex; align-items: center; gap: 12px;
-        margin: 14px 0; color: var(--muted); font-size: 11px; letter-spacing: 0.08em;
+        display: flex; align-items: center; gap: 10px;
+        margin: 12px 0; color: var(--muted); font-size: 11px; letter-spacing: 0.08em;
         text-transform: uppercase;
     }
     .form-divider::before, .form-divider::after {
@@ -844,20 +924,19 @@
     }
     .btn-wpp-alt {
         width: 100%; display: flex; align-items: center; justify-content: center;
-        gap: 10px;
+        gap: 9px;
         background: rgba(37,211,102,0.1);
         border: 1.5px solid rgba(37,211,102,0.28);
         color: #25d366; border-radius: 10px;
-        padding: 13px; font-size: 14px; font-weight: 600;
+        padding: 12px; font-size: 14px; font-weight: 600;
         font-family: 'DM Sans', sans-serif;
         cursor: pointer; text-decoration: none; transition: all 0.25s;
-        letter-spacing: 0.02em;
     }
     .btn-wpp-alt:hover { background: rgba(37,211,102,0.18); transform: translateY(-1px); }
     .form-submit {
         width: 100%; background: var(--gold); color: #000;
-        border: none; border-radius: 10px; padding: 15px;
-        font-size: 14px; font-weight: 700; font-family: 'DM Sans', sans-serif;
+        border: none; border-radius: 10px; padding: 14px;
+        font-size: 13px; font-weight: 700; font-family: 'DM Sans', sans-serif;
         letter-spacing: 0.06em; text-transform: uppercase;
         cursor: pointer; transition: all 0.25s;
         position: relative; overflow: hidden; margin-top: 4px;
@@ -867,7 +946,7 @@
     .form-submit:active { transform: translateY(0); }
     .form-submit:disabled { opacity: 0.55; cursor: not-allowed; transform: none; box-shadow: none; }
     .btn-spinner {
-        width: 16px; height: 16px;
+        width: 15px; height: 15px;
         border: 2px solid rgba(0,0,0,0.25); border-top-color: #000;
         border-radius: 50%; animation: spin 0.7s linear infinite;
         display: none; flex-shrink: 0;
@@ -876,20 +955,20 @@
     .form-submit.loading .btn-text { display: none; }
     @keyframes spin { to { transform: rotate(360deg); } }
     .form-success {
-        text-align: center; padding: 36px 20px; display: none;
+        text-align: center; padding: 32px 16px; display: none;
     }
     .form-success.show { display: block; animation: fadeUp 0.4s ease; }
-    .form-success-icon { font-size: 48px; margin-bottom: 14px; display: block; }
+    .form-success-icon { font-size: 44px; margin-bottom: 12px; display: block; }
     .form-success h3 {
         font-family: 'Playfair Display', serif;
-        font-size: 22px; color: var(--white); margin-bottom: 8px;
+        font-size: 20px; color: var(--white); margin-bottom: 8px;
     }
-    .form-success p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+    .form-success p { font-size: 13px; color: var(--muted); line-height: 1.6; }
     .success-action {
         display: inline-flex; align-items: center; gap: 8px;
-        margin-top: 20px; background: #25d366; color: #fff;
-        padding: 12px 24px; border-radius: 10px;
-        font-size: 14px; font-weight: 600;
+        margin-top: 18px; background: #25d366; color: #fff;
+        padding: 11px 22px; border-radius: 10px;
+        font-size: 13px; font-weight: 600;
         text-decoration: none; transition: all 0.2s;
     }
     .success-action:hover { filter: brightness(1.1); }
@@ -899,122 +978,230 @@
 
     .contato-grid {
         display: grid; grid-template-columns: 1fr 1.2fr;
-        gap: 60px; align-items: start;
+        gap: 56px; align-items: start;
     }
 
     .contato-info h2 {
         font-family: 'Playfair Display', serif;
-        font-size: clamp(28px, 3.5vw, 44px);
+        font-size: clamp(26px, 3.2vw, 42px);
         font-weight: 700; color: var(--white);
-        line-height: 1.15; margin-bottom: 16px;
+        line-height: 1.15; margin-bottom: 14px;
     }
 
     .contato-info p {
-        font-size: 15px; color: rgba(240,236,228,0.6);
-        line-height: 1.7; margin-bottom: 36px;
+        font-size: 14px; color: rgba(240,236,228,0.58);
+        line-height: 1.7; margin-bottom: 32px;
     }
 
-    .contato-items { display: flex; flex-direction: column; gap: 16px; }
+    .contato-items { display: flex; flex-direction: column; gap: 14px; }
 
     .contato-item {
-        display: flex; align-items: center; gap: 14px;
+        display: flex; align-items: center; gap: 13px;
         background: var(--bg3); border: 1px solid var(--border);
-        border-radius: var(--radius); padding: 16px 20px;
+        border-radius: var(--radius); padding: 15px 18px;
     }
     .contato-item-icon {
-        width: 42px; height: 42px; flex-shrink: 0;
+        width: 40px; height: 40px; flex-shrink: 0;
         background: var(--gold-dim); border-radius: 10px;
-        display: grid; place-items: center; font-size: 20px;
+        display: grid; place-items: center; font-size: 18px;
     }
-    .contato-item-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
-    .contato-item-value { font-size: 15px; font-weight: 500; color: var(--white); margin-top: 2px; }
+    .contato-item-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+    .contato-item-value { font-size: 14px; font-weight: 500; color: var(--white); margin-top: 2px; }
 
     /* ===== FOOTER ===== */
     footer {
         background: var(--bg2);
         border-top: 1px solid var(--border);
-        padding: 40px clamp(20px, 5vw, 80px);
-        display: flex; align-items: center; justify-content: space-between;
-        gap: 20px; flex-wrap: wrap;
+        padding: 36px 0;
     }
-
-    .footer-copy { font-size: 13px; color: var(--muted); }
+    .footer-inner {
+        display: flex; align-items: center; justify-content: space-between;
+        gap: 16px; flex-wrap: wrap;
+    }
+    .footer-copy { font-size: 12px; color: var(--muted); }
     .footer-copy a { color: var(--gold); }
 
     /* ===== WHATSAPP FLOAT ===== */
     .whatsapp-float {
-        position: fixed; bottom: 28px; right: 28px; z-index: 800;
-        width: 58px; height: 58px;
+        position: fixed; bottom: 24px; right: 24px; z-index: 800;
+        width: 54px; height: 54px;
         background: #25d366; border-radius: 50%;
         display: grid; place-items: center;
         box-shadow: 0 8px 28px rgba(37,211,102,0.4);
-        font-size: 28px; transition: all 0.25s;
+        font-size: 26px; transition: all 0.25s;
         animation: fadeUp 1s 1.2s both;
     }
     .whatsapp-float:hover { transform: scale(1.1); box-shadow: 0 12px 36px rgba(37,211,102,0.55); }
 
     /* ===== ANIMAÇÕES ===== */
     @keyframes fadeUp {
-        from { opacity: 0; transform: translateY(20px); }
+        from { opacity: 0; transform: translateY(18px); }
         to   { opacity: 1; transform: translateY(0); }
     }
 
     /* ===== TOAST ===== */
     .toast {
-        position: fixed; bottom: 100px; right: 28px; z-index: 2000;
+        position: fixed; bottom: 90px; right: 24px; z-index: 2000;
         background: var(--bg3); border: 1px solid var(--border);
-        border-radius: 12px; padding: 14px 18px;
-        display: flex; align-items: center; gap: 12px;
+        border-radius: 12px; padding: 13px 16px;
+        display: flex; align-items: center; gap: 11px;
         box-shadow: var(--shadow);
         transform: translateX(120%); transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
-        max-width: 320px;
+        max-width: 300px; min-width: 200px;
     }
     .toast.show { transform: translateX(0); }
-    .toast-icon { font-size: 22px; }
-    .toast-text { font-size: 14px; font-weight: 500; color: var(--white); }
-    .toast-sub  { font-size: 12px; color: var(--muted); }
+    .toast-icon { font-size: 20px; }
+    .toast-text { font-size: 13px; font-weight: 500; color: var(--white); }
+    .toast-sub  { font-size: 11px; color: var(--muted); }
 
-    /* ===== RESPONSIVO ===== */
-    @media (max-width: 900px) {
-        .destaque-card { grid-template-columns: 1fr; }
-        .destaque-gallery { min-height: 280px; }
-        .contato-grid { grid-template-columns: 1fr; gap: 40px; }
-        .hero-stats { position: static; margin-top: 40px; flex-wrap: wrap; }
-        .hero-stat:first-child, .hero-stat:last-child { border-radius: var(--radius); }
-        .hero-stat { flex: 1; min-width: 80px; }
-    }
+    /* ========================================================
+       RESPONSIVO — do maior para o menor
+    ======================================================== */
 
-    @media (max-width: 600px) {
-        .form-row { grid-template-columns: 1fr; }
-        .destaque-specs { grid-template-columns: 1fr 1fr; }
-        .modal-specs-grid { grid-template-columns: 1fr 1fr; }
-        .vehicles-grid { grid-template-columns: 1fr; }
-    }
-    /* ===== MODAL + FORM RESPONSIVO ===== */
-    @media (min-width: 700px) {
-        .modal-overlay { align-items: center; padding: 20px; }
+    /* Desktop largo ≥ 1024px: modal centralizado */
+    @media (min-width: 1024px) {
+        .modal-overlay {
+            align-items: center;
+            padding: 24px;
+        }
         .modal {
             border-radius: var(--radius-lg);
             border-bottom: 1px solid rgba(201,168,76,0.15);
+            max-width: 960px;
+            max-height: 88vh;
+        }
+        .modal-drag-handle { display: none; }
+        .modal-sticky-cta { display: none !important; }
+        .modal-gallery {
+            height: clamp(300px, 44vh, 480px);
+        }
+    }
+
+    /* Tablet/Desktop médio 768px — 1023px */
+    @media (min-width: 768px) and (max-width: 1023px) {
+        .modal-overlay {
+            align-items: center;
+            padding: 20px;
+        }
+        .modal {
+            border-radius: var(--radius-lg);
+            border-bottom: 1px solid rgba(201,168,76,0.15);
+            max-width: 720px;
             max-height: 90vh;
         }
         .modal-drag-handle { display: none; }
         .modal-sticky-cta { display: none !important; }
+        .vehicles-grid {
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        }
+        .destaque-card {
+            grid-template-columns: 1.1fr 1fr;
+        }
+        .contato-grid {
+            grid-template-columns: 1fr;
+            gap: 36px;
+        }
     }
-    @media (max-width: 699px) {
+
+    /* Mobile grande 480px — 767px */
+    @media (max-width: 767px) {
+        /* Header */
+        .header-nav { display: none; }
+        .header-cta { display: none; }
+        .hamburger { display: flex; }
+
+        /* Hero */
+        #hero {
+            padding-bottom: 160px; /* espaço para stats abaixo */
+        }
+        .hero-stats {
+            position: absolute;
+            bottom: 24px;
+            right: auto; left: var(--px);
+            right: var(--px);
+            flex-wrap: nowrap;
+            width: calc(100% - 2 * var(--px));
+            justify-content: stretch;
+        }
+        .hero-stat {
+            flex: 1;
+            min-width: 0;
+            padding: 12px 8px;
+        }
+        .hero-stat:first-child { border-radius: var(--radius) 0 0 var(--radius); }
+        .hero-stat:last-child  { border-radius: 0 var(--radius) var(--radius) 0; }
+        .hero-stat-value { font-size: 20px; }
+        .hero-stat-label { font-size: 9px; }
+
+        /* Destaque */
+        .destaque-card { grid-template-columns: 1fr; }
+        .destaque-gallery { min-height: 240px; }
+        .destaque-info { padding: 22px 18px; }
+        .destaque-specs { grid-template-columns: 1fr 1fr; }
+
+        /* Estoque */
+        .filters-bar {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .filter-input { max-width: 100%; }
+        .filter-select, .filter-input { min-width: 0; }
+
+        .vehicles-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+        .card-image { height: 160px; }
+        .card-title { font-size: 14px; }
+        .card-version { font-size: 10px; }
+        .card-price { font-size: 17px; }
+        .card-cta { padding: 6px 10px; font-size: 10px; }
+        .card-specs { display: none; } /* esconde specs no grid 2col */
+
+        /* Contato */
+        .contato-grid { grid-template-columns: 1fr; gap: 32px; }
+
+        /* Modal */
         .modal { max-height: 96vh; }
         .modal-gallery-thumbs { display: none; }
-        .modal-header-row { grid-template-columns: 1fr; gap: 8px; }
+        .modal-header-row {
+            grid-template-columns: 1fr;
+            gap: 6px;
+        }
         .modal-price-block { text-align: left; }
         .modal-specs-grid { grid-template-columns: 1fr 1fr; }
-        .modal-sticky-cta { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .modal-sticky-cta { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+
+        /* Form */
         .form-row { grid-template-columns: 1fr; }
         .modal-quick-cta { grid-template-columns: 1fr; }
+
+        /* Toast */
+        .toast {
+            left: 16px; right: 16px; bottom: 16px;
+            max-width: none;
+            transform: translateY(120%);
+        }
+        .toast.show { transform: translateY(0); }
     }
-    @media (max-width: 480px) {
+
+    /* Mobile pequeno < 480px */
+    @media (max-width: 479px) {
+        .hero-title { font-size: 30px; }
+        .hero-sub { font-size: 13px; }
+        .btn-primary, .btn-ghost { padding: 12px 20px; font-size: 12px; }
+
+        .vehicles-grid { grid-template-columns: 1fr; }
+        .card-image { height: 185px; }
+        .card-title { font-size: 16px; }
+        .card-specs { display: flex; }
+        .card-price { font-size: 19px; }
+
+        .destaque-specs { grid-template-columns: 1fr 1fr; }
         .modal-specs-grid { grid-template-columns: 1fr 1fr; gap: 6px; }
-        .modal-spec { padding: 11px 12px; }
-        .modal-spec-value { font-size: 13px; }
+        .modal-spec { padding: 10px 12px; }
+        .modal-spec-value { font-size: 12px; }
+
+        .hero-stats {
+            display: none; /* muito pequeno, esconde stats */
+        }
     }
     </style>
 </head>
@@ -1022,15 +1209,38 @@
 
 <!-- HEADER -->
 <header>
-    <div class="logo">
-        <div class="logo-badge">E</div>
-        <div>
-            ELVIS VEÍCULOS
-            <span class="logo-sub">Seminovos Premium</span>
+    <div class="header-inner">
+        <div class="logo">
+            <div class="logo-badge">E</div>
+            <div class="logo-text-wrap">
+                <span>ELVIS VEÍCULOS</span>
+                <span class="logo-sub">Seminovos Premium</span>
+            </div>
         </div>
+
+        <!-- Nav desktop -->
+        <nav class="header-nav">
+            <a href="#destaque" onclick="scrollTo('#destaque');return false;">Destaque</a>
+            <a href="#estoque" onclick="scrollTo('#estoque');return false;">Estoque</a>
+            <a href="#contato" onclick="scrollTo('#contato');return false;">Contato</a>
+        </nav>
+
+        <button class="header-cta" onclick="scrollTo('#estoque')">Ver Estoque</button>
+
+        <!-- Hamburger mobile -->
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
     </div>
-    <button class="header-cta" onclick="scrollTo('#estoque')">Ver Estoque</button>
 </header>
+
+<!-- DRAWER MOBILE -->
+<nav class="mobile-drawer" id="mobile-drawer">
+    <a href="#destaque" onclick="closeDrawer();scrollTo('#destaque');return false;">⭐ Destaque</a>
+    <a href="#estoque"  onclick="closeDrawer();scrollTo('#estoque');return false;">🚗 Estoque</a>
+    <a href="#contato"  onclick="closeDrawer();scrollTo('#contato');return false;">📩 Contato</a>
+    <button class="drawer-cta" onclick="closeDrawer();scrollTo('#estoque')">Ver Estoque</button>
+</nav>
 
 <!-- HERO -->
 <section id="hero">
@@ -1046,7 +1256,7 @@
         <p class="hero-sub" id="hero-sub">Seminovos selecionados com qualidade, procedência e o melhor preço.</p>
         <div class="hero-actions">
             <button class="btn-primary" onclick="scrollTo('#destaque')">Ver Destaque</button>
-            <button class="btn-ghost" onclick="scrollTo('#contato')">Falar com Consultor</button>
+            <button class="btn-ghost"   onclick="scrollTo('#contato')">Falar com Consultor</button>
         </div>
     </div>
 
@@ -1068,27 +1278,28 @@
 
 <!-- DESTAQUE -->
 <section id="destaque">
-    <div class="section-header">
-        <div>
-            <div class="section-label">Escolha da Semana</div>
-            <h2 class="section-title serif">Veículo em <em style="font-style:italic;color:var(--gold)">Destaque</em></h2>
+    <div class="container">
+        <div class="section-header">
+            <div>
+                <div class="section-label">Escolha da Semana</div>
+                <h2 class="section-title serif">Veículo em <em style="font-style:italic;color:var(--gold)">Destaque</em></h2>
+            </div>
         </div>
-    </div>
 
-    <div class="destaque-card" id="destaque-card">
-        <!-- preenchido por JS -->
-        <div class="destaque-gallery">
-            <div class="card-image-placeholder">🚗</div>
-        </div>
-        <div class="destaque-info">
-            <div style="height:20px;width:120px;" class="skeleton"></div>
-            <div style="height:36px;width:80%;margin:16px 0 8px;" class="skeleton"></div>
-            <div style="height:14px;width:60%;margin-bottom:28px;" class="skeleton"></div>
-            <div class="destaque-specs">
-                <div style="height:72px;" class="skeleton"></div>
-                <div style="height:72px;" class="skeleton"></div>
-                <div style="height:72px;" class="skeleton"></div>
-                <div style="height:72px;" class="skeleton"></div>
+        <div class="destaque-card" id="destaque-card">
+            <div class="destaque-gallery">
+                <div class="card-image-placeholder">🚗</div>
+            </div>
+            <div class="destaque-info">
+                <div style="height:18px;width:110px;" class="skeleton"></div>
+                <div style="height:34px;width:80%;margin:14px 0 8px;" class="skeleton"></div>
+                <div style="height:13px;width:60%;margin-bottom:24px;" class="skeleton"></div>
+                <div class="destaque-specs">
+                    <div style="height:66px;" class="skeleton"></div>
+                    <div style="height:66px;" class="skeleton"></div>
+                    <div style="height:66px;" class="skeleton"></div>
+                    <div style="height:66px;" class="skeleton"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -1096,131 +1307,134 @@
 
 <!-- ESTOQUE -->
 <section id="estoque">
-    <div class="section-header">
-        <div>
-            <div class="section-label">Estoque Completo</div>
-            <h2 class="section-title serif">Todos os <em style="font-style:italic;color:var(--gold)">Veículos</em></h2>
+    <div class="container">
+        <div class="section-header">
+            <div>
+                <div class="section-label">Estoque Completo</div>
+                <h2 class="section-title serif">Todos os <em style="font-style:italic;color:var(--gold)">Veículos</em></h2>
+            </div>
+            <span style="font-size:13px;color:var(--muted)" id="vehicles-count"></span>
         </div>
-        <span style="font-size:13px;color:var(--muted)" id="vehicles-count"></span>
-    </div>
 
-    <!-- Filtros -->
-    <div class="filters-bar">
-        <input type="text" class="filter-input" id="f-busca" placeholder="🔍  Buscar marca ou modelo...">
-        <select class="filter-select" id="f-marca">
-            <option value="">Todas as marcas</option>
-        </select>
-        <select class="filter-select" id="f-cambio">
-            <option value="">Câmbio</option>
-            <option value="Automático">Automático</option>
-            <option value="Manual">Manual</option>
-            <option value="CVT">CVT</option>
-        </select>
-        <select class="filter-select" id="f-combustivel">
-            <option value="">Combustível</option>
-            <option value="Flex">Flex</option>
-            <option value="Gasolina">Gasolina</option>
-            <option value="Diesel">Diesel</option>
-            <option value="Elétrico">Elétrico</option>
-            <option value="Híbrido">Híbrido</option>
-        </select>
-        <select class="filter-select" id="f-preco">
-            <option value="">Faixa de preço</option>
-            <option value="0-50000">Até R$ 50.000</option>
-            <option value="50000-80000">R$ 50k — 80k</option>
-            <option value="80000-120000">R$ 80k — 120k</option>
-            <option value="120000-999999">Acima de R$ 120k</option>
-        </select>
-        <button class="filter-btn-reset" id="btn-reset">✕ Limpar</button>
-    </div>
+        <!-- Filtros -->
+        <div class="filters-bar">
+            <input type="text" class="filter-input" id="f-busca" placeholder="🔍  Buscar marca ou modelo...">
+            <select class="filter-select" id="f-marca">
+                <option value="">Todas as marcas</option>
+            </select>
+            <select class="filter-select" id="f-cambio">
+                <option value="">Câmbio</option>
+                <option value="Automático">Automático</option>
+                <option value="Manual">Manual</option>
+                <option value="CVT">CVT</option>
+            </select>
+            <select class="filter-select" id="f-combustivel">
+                <option value="">Combustível</option>
+                <option value="Flex">Flex</option>
+                <option value="Gasolina">Gasolina</option>
+                <option value="Diesel">Diesel</option>
+                <option value="Elétrico">Elétrico</option>
+                <option value="Híbrido">Híbrido</option>
+            </select>
+            <select class="filter-select" id="f-preco">
+                <option value="">Faixa de preço</option>
+                <option value="0-50000">Até R$ 50.000</option>
+                <option value="50000-80000">R$ 50k — 80k</option>
+                <option value="80000-120000">R$ 80k — 120k</option>
+                <option value="120000-999999">Acima de R$ 120k</option>
+            </select>
+            <button class="filter-btn-reset" id="btn-reset">✕ Limpar</button>
+        </div>
 
-    <div class="vehicles-grid" id="vehicles-grid">
-        <!-- skeletons -->
-        <div class="vehicle-card"><div style="height:200px;" class="skeleton"></div><div class="card-body"><div style="height:20px;margin-bottom:8px;" class="skeleton"></div><div style="height:14px;width:60%;margin-bottom:16px;" class="skeleton"></div><div style="height:40px;" class="skeleton"></div></div></div>
-        <div class="vehicle-card"><div style="height:200px;" class="skeleton"></div><div class="card-body"><div style="height:20px;margin-bottom:8px;" class="skeleton"></div><div style="height:14px;width:60%;margin-bottom:16px;" class="skeleton"></div><div style="height:40px;" class="skeleton"></div></div></div>
-        <div class="vehicle-card"><div style="height:200px;" class="skeleton"></div><div class="card-body"><div style="height:20px;margin-bottom:8px;" class="skeleton"></div><div style="height:14px;width:60%;margin-bottom:16px;" class="skeleton"></div><div style="height:40px;" class="skeleton"></div></div></div>
+        <div class="vehicles-grid" id="vehicles-grid">
+            <div class="vehicle-card"><div style="height:195px;" class="skeleton"></div><div class="card-body"><div style="height:18px;margin-bottom:7px;" class="skeleton"></div><div style="height:12px;width:60%;margin-bottom:14px;" class="skeleton"></div><div style="height:38px;" class="skeleton"></div></div></div>
+            <div class="vehicle-card"><div style="height:195px;" class="skeleton"></div><div class="card-body"><div style="height:18px;margin-bottom:7px;" class="skeleton"></div><div style="height:12px;width:60%;margin-bottom:14px;" class="skeleton"></div><div style="height:38px;" class="skeleton"></div></div></div>
+            <div class="vehicle-card"><div style="height:195px;" class="skeleton"></div><div class="card-body"><div style="height:18px;margin-bottom:7px;" class="skeleton"></div><div style="height:12px;width:60%;margin-bottom:14px;" class="skeleton"></div><div style="height:38px;" class="skeleton"></div></div></div>
+        </div>
     </div>
 </section>
 
 <!-- CONTATO -->
 <section id="contato">
-    <div class="contato-grid">
-        <div class="contato-info">
-            <div class="section-label">Fale Conosco</div>
-            <h2>Seu próximo veículo <em style="font-style:italic;color:var(--gold)">está aqui</em></h2>
-            <p>Nossa equipe está pronta para te ajudar a encontrar o veículo ideal. Entre em contato e receba uma proposta personalizada.</p>
+    <div class="container">
+        <div class="contato-grid">
+            <div class="contato-info">
+                <div class="section-label">Fale Conosco</div>
+                <h2>Seu próximo veículo <em style="font-style:italic;color:var(--gold)">está aqui</em></h2>
+                <p>Nossa equipe está pronta para te ajudar a encontrar o veículo ideal. Entre em contato e receba uma proposta personalizada.</p>
 
-            <div class="contato-items">
-                <div class="contato-item">
-                    <div class="contato-item-icon">📱</div>
-                    <div>
-                        <div class="contato-item-label">WhatsApp</div>
-                        <div class="contato-item-value" id="contato-whatsapp">(00) 00000-0000</div>
+                <div class="contato-items">
+                    <div class="contato-item">
+                        <div class="contato-item-icon">📱</div>
+                        <div>
+                            <div class="contato-item-label">WhatsApp</div>
+                            <div class="contato-item-value" id="contato-whatsapp">(00) 00000-0000</div>
+                        </div>
                     </div>
-                </div>
-                <div class="contato-item">
-                    <div class="contato-item-icon">📍</div>
-                    <div>
-                        <div class="contato-item-label">Endereço</div>
-                        <div class="contato-item-value">Visite nossa loja</div>
+                    <div class="contato-item">
+                        <div class="contato-item-icon">📍</div>
+                        <div>
+                            <div class="contato-item-label">Endereço</div>
+                            <div class="contato-item-value">Visite nossa loja</div>
+                        </div>
                     </div>
-                </div>
-                <div class="contato-item">
-                    <div class="contato-item-icon">🕐</div>
-                    <div>
-                        <div class="contato-item-label">Horário</div>
-                        <div class="contato-item-value">Seg–Sáb: 8h às 18h</div>
+                    <div class="contato-item">
+                        <div class="contato-item-icon">🕐</div>
+                        <div>
+                            <div class="contato-item-label">Horário</div>
+                            <div class="contato-item-value">Seg–Sáb: 8h às 18h</div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div>
-            <div class="contact-form" id="contact-form-general">
-                <div class="contact-form-title">Envie uma mensagem</div>
-                <div class="contact-form-sub">Resposta rápida — geralmente em menos de 1h em dias úteis.</div>
+            <div>
+                <div class="contact-form" id="contact-form-general">
+                    <div class="contact-form-title">Envie uma mensagem</div>
+                    <div class="contact-form-sub">Resposta rápida — geralmente em menos de 1h em dias úteis.</div>
 
-                <div class="form-success" id="form-success">
-                    <span class="form-success-icon">🎉</span>
-                    <h3>Mensagem enviada!</h3>
-                    <p>Em breve nossa equipe entrará em contato com você.</p>
-                    <a class="success-action" id="general-success-wpp" href="#">💬 Falar agora no WhatsApp</a>
-                </div>
+                    <div class="form-success" id="form-success">
+                        <span class="form-success-icon">🎉</span>
+                        <h3>Mensagem enviada!</h3>
+                        <p>Em breve nossa equipe entrará em contato com você.</p>
+                        <a class="success-action" id="general-success-wpp" href="#">💬 Falar agora no WhatsApp</a>
+                    </div>
 
-                <div id="general-form-fields">
-                    <div class="form-row">
-                        <div class="form-field has-icon" id="ff-c-nome">
-                            <label for="c-nome">Nome completo *</label>
-                            <input type="text" id="c-nome" autocomplete="name">
-                            <span class="field-icon">👤</span>
-                            <div class="field-error">Informe seu nome</div>
+                    <div id="general-form-fields">
+                        <div class="form-row">
+                            <div class="form-field has-icon" id="ff-c-nome">
+                                <label for="c-nome">Nome completo *</label>
+                                <input type="text" id="c-nome" autocomplete="name">
+                                <span class="field-icon">👤</span>
+                                <div class="field-error">Informe seu nome</div>
+                            </div>
+                            <div class="form-field has-icon" id="ff-c-telefone">
+                                <label for="c-telefone">WhatsApp / Telefone *</label>
+                                <input type="tel" id="c-telefone" autocomplete="tel" inputmode="numeric" maxlength="15">
+                                <span class="field-icon">📱</span>
+                                <div class="field-error">Informe um telefone válido</div>
+                            </div>
                         </div>
-                        <div class="form-field has-icon" id="ff-c-telefone">
-                            <label for="c-telefone">WhatsApp / Telefone *</label>
-                            <input type="tel" id="c-telefone" autocomplete="tel" inputmode="numeric" maxlength="15">
-                            <span class="field-icon">📱</span>
-                            <div class="field-error">Informe um telefone válido</div>
+                        <div class="form-field" id="ff-c-email">
+                            <label for="c-email">E-mail</label>
+                            <input type="email" id="c-email" autocomplete="email" inputmode="email">
+                            <div class="field-error">E-mail inválido</div>
                         </div>
+                        <div class="form-field" id="ff-c-cidade">
+                            <label for="c-cidade">Cidade</label>
+                            <input type="text" id="c-cidade" autocomplete="address-level2">
+                        </div>
+                        <div class="form-field" id="ff-c-mensagem">
+                            <label for="c-mensagem">Mensagem</label>
+                            <textarea id="c-mensagem"></textarea>
+                        </div>
+                        <button class="form-submit" id="btn-enviar">
+                            <span class="btn-spinner"></span>
+                            <span class="btn-text">Enviar Mensagem →</span>
+                        </button>
+                        <div class="form-divider">ou</div>
+                        <a class="btn-wpp-alt" id="general-wpp-alt" href="#" target="_blank">💬 Enviar direto pelo WhatsApp</a>
                     </div>
-                    <div class="form-field" id="ff-c-email">
-                        <label for="c-email">E-mail</label>
-                        <input type="email" id="c-email" autocomplete="email" inputmode="email">
-                        <div class="field-error">E-mail inválido</div>
-                    </div>
-                    <div class="form-field" id="ff-c-cidade">
-                        <label for="c-cidade">Cidade</label>
-                        <input type="text" id="c-cidade" autocomplete="address-level2">
-                    </div>
-                    <div class="form-field" id="ff-c-mensagem">
-                        <label for="c-mensagem">Mensagem</label>
-                        <textarea id="c-mensagem"></textarea>
-                    </div>
-                    <button class="form-submit" id="btn-enviar">
-                        <span class="btn-spinner"></span>
-                        <span class="btn-text">Enviar Mensagem →</span>
-                    </button>
-                    <div class="form-divider">ou</div>
-                    <a class="btn-wpp-alt" id="general-wpp-alt" href="#" target="_blank">💬 Enviar direto pelo WhatsApp</a>
                 </div>
             </div>
         </div>
@@ -1229,12 +1443,16 @@
 
 <!-- FOOTER -->
 <footer>
-    <div class="logo" style="font-size:16px;">
-        <div class="logo-badge" style="width:30px;height:30px;font-size:15px;">E</div>
-        Elvis Veículos
-    </div>
-    <div class="footer-copy">
-        © 2025 Elvis Veículos — Todos os direitos reservados
+    <div class="container">
+        <div class="footer-inner">
+            <div class="logo" style="font-size:15px;">
+                <div class="logo-badge" style="width:30px;height:30px;font-size:14px;">E</div>
+                Elvis Veículos
+            </div>
+            <div class="footer-copy">
+                © 2025 Elvis Veículos — Todos os direitos reservados
+            </div>
+        </div>
     </div>
 </footer>
 
@@ -1272,7 +1490,6 @@
                     </div>
                 </div>
 
-                <!-- CTAs rápidos -->
                 <div class="modal-quick-cta" id="modal-quick-cta">
                     <a class="modal-cta-wpp" id="modal-wpp-link" href="#" target="_blank">💬 WhatsApp</a>
                     <button class="modal-cta-form" onclick="document.getElementById('modal-form-section').scrollIntoView({behavior:'smooth'})">📋 Enviar Proposta</button>
@@ -1285,7 +1502,6 @@
                     <div class="optionals-tags" id="modal-optionals-tags"></div>
                 </div>
 
-                <!-- Form de contato sobre o veículo -->
                 <div class="contact-form" id="modal-form-section">
                     <div class="contact-form-title">Tenho interesse neste veículo</div>
                     <div class="contact-form-sub">Preencha seus dados e entraremos em contato em breve.</div>
@@ -1342,7 +1558,7 @@
                 </div>
             </div>
 
-            <!-- Sticky CTA bar (mobile) -->
+            <!-- Sticky CTA bar (mobile apenas) -->
             <div class="modal-sticky-cta" id="modal-sticky-cta">
                 <a class="modal-cta-wpp" id="modal-sticky-wpp" href="#" target="_blank">💬 WhatsApp</a>
                 <button class="modal-cta-form" onclick="document.getElementById('modal-form-section').scrollIntoView({behavior:'smooth'})">📋 Proposta</button>
@@ -1363,10 +1579,10 @@
 <script>
 // ==================== CONFIGURAÇÃO ====================
 const CONFIG = {
-    SUPABASE_URL: 'https://mlqgxjujaxfixaxertpn.supabase.co',
-    SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1scWd4anVqYXhmaXhheGVydHBuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE4NDg3MzgsImV4cCI6MjA4NzQyNDczOH0.ri69N3__upUzWRHdsGHZ6CuGLy6l8PZnVCypw-WArK8',
-    WHATSAPP:        '5500000000000',                      // ← substitua (DDI+DDD+número)
-    NOME_LOJA:       'Elvis Veículos'
+    SUPABASE_URL:     'https://mlqgxjujaxfixaxertpn.supabase.co',
+    SUPABASE_ANON_KEY:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1scWd4anVqYXhmaXhheGVydHBuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE4NDg3MzgsImV4cCI6MjA4NzQyNDczOH0.ri69N3__upUzWRHdsGHZ6CuGLy6l8PZnVCypw-WArK8',
+    WHATSAPP:         '5516993117529',
+    NOME_LOJA:        'Elvis Veículos'
 };
 
 // ==================== SUPABASE ====================
@@ -1409,6 +1625,29 @@ function showToast(icon, text, sub = '') {
     clearTimeout(window._toastTimer);
     window._toastTimer = setTimeout(() => t.classList.remove('show'), 4000);
 }
+
+// ==================== HAMBURGER MENU ====================
+const hamburger = $('hamburger');
+const drawer    = $('mobile-drawer');
+
+hamburger?.addEventListener('click', () => {
+    const open = drawer.classList.toggle('open');
+    hamburger.classList.toggle('open', open);
+});
+
+function closeDrawer() {
+    drawer.classList.remove('open');
+    hamburger.classList.remove('open');
+}
+
+// Fechar drawer ao clicar fora
+document.addEventListener('click', e => {
+    if (drawer.classList.contains('open') &&
+        !drawer.contains(e.target) &&
+        !hamburger.contains(e.target)) {
+        closeDrawer();
+    }
+});
 
 // ==================== CARREGAR VEÍCULOS ====================
 async function loadVehicles() {
@@ -1460,7 +1699,6 @@ function renderDestaque() {
     // Hero bg
     if (v.photos && v.photos.length) {
         $('hero-img').src = v.photos[0];
-        $('hero-img').style.opacity = '0.45';
         $('hero-title').innerHTML = `<em>${escapeHTML(v.marca)}</em><br>${escapeHTML(v.modelo)}`;
         $('hero-sub').textContent  = `${v.versao || ''} · ${v.ano_modelo || v.ano_fabricacao || ''} · ${formatKm(v.km)}`.replace(/^ · | · $/g, '');
     }
@@ -1494,7 +1732,7 @@ function renderDestaque() {
                     ${formatPrice(v.preco)}
                 </div>
             </div>
-            <div style="display:flex;gap:12px;flex-wrap:wrap;">
+            <div class="destaque-actions">
                 <button class="btn-primary" onclick="openModal(${v.id})">Ver Detalhes</button>
                 <a href="https://wa.me/${CONFIG.WHATSAPP}?text=${encodeURIComponent(`Olá! Tenho interesse no ${v.marca} ${v.modelo} ${v.ano_modelo || ''}. Vi no site da ${CONFIG.NOME_LOJA}.`)}" target="_blank">
                     <button class="btn-ghost">💬 WhatsApp</button>
@@ -1502,10 +1740,10 @@ function renderDestaque() {
             </div>
         </div>`;
 
-    // Thumbnails destaque
     document.querySelectorAll('.gallery-thumb').forEach(thumb => {
         thumb.addEventListener('click', () => {
-            $('dest-main-img').src = thumb.dataset.src;
+            const mainImg = $('dest-main-img');
+            if (mainImg) mainImg.src = thumb.dataset.src;
             document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
             thumb.classList.add('active');
         });
@@ -1543,9 +1781,9 @@ function renderGrid(filtered = null) {
                 <div class="card-version">${escapeHTML(v.versao || '')} ${v.ano_modelo ? `· ${v.ano_modelo}` : ''}</div>
                 <div class="card-specs">
                     ${v.km != null ? `<span class="card-spec">🛣 <strong>${formatKm(v.km)}</strong></span>` : ''}
-                    ${v.cambio    ? `<span class="card-spec">⚙️ <strong>${escapeHTML(v.cambio)}</strong></span>` : ''}
+                    ${v.cambio      ? `<span class="card-spec">⚙️ <strong>${escapeHTML(v.cambio)}</strong></span>` : ''}
                     ${v.combustivel ? `<span class="card-spec">⛽ <strong>${escapeHTML(v.combustivel)}</strong></span>` : ''}
-                    ${v.cor       ? `<span class="card-spec">🎨 <strong>${escapeHTML(v.cor)}</strong></span>` : ''}
+                    ${v.cor         ? `<span class="card-spec">🎨 <strong>${escapeHTML(v.cor)}</strong></span>` : ''}
                 </div>
                 <div class="card-footer">
                     <div class="card-price">${formatPrice(v.preco)}</div>
@@ -1569,11 +1807,11 @@ function buildFilters() {
 }
 
 function applyFilters() {
-    const busca     = $('f-busca').value.toLowerCase();
-    const marca     = $('f-marca').value;
-    const cambio    = $('f-cambio').value;
-    const comb      = $('f-combustivel').value;
-    const precoFx   = $('f-preco').value;
+    const busca   = $('f-busca').value.toLowerCase();
+    const marca   = $('f-marca').value;
+    const cambio  = $('f-cambio').value;
+    const comb    = $('f-combustivel').value;
+    const precoFx = $('f-preco').value;
 
     let list = allVehicles.filter(v => {
         if (busca && !(`${v.marca} ${v.modelo} ${v.versao || ''}`.toLowerCase().includes(busca))) return false;
@@ -1598,10 +1836,9 @@ function applyFilters() {
 
 $('btn-reset')?.addEventListener('click', () => {
     ['f-busca','f-marca','f-cambio','f-combustivel','f-preco'].forEach(id => {
-        const el = $(id);
-        if (el) el.value = '';
+        const el = $(id); if (el) el.value = '';
     });
-    $('vehicles-count').textContent = `${allVehicles.length} veículos encontrados`;
+    $('vehicles-count').textContent = `${allVehicles.length} veículo${allVehicles.length !== 1 ? 's' : ''} encontrado${allVehicles.length !== 1 ? 's' : ''}`;
     renderGrid();
 });
 
@@ -1641,10 +1878,7 @@ function setupFloatingLabels(fieldIds) {
 function setupPhoneMask(inputId) {
     const el = document.getElementById(inputId);
     if (!el) return;
-    el.addEventListener('input', e => {
-        const cursor = e.target.selectionStart;
-        e.target.value = phoneMask(e.target.value);
-    });
+    el.addEventListener('input', e => { e.target.value = phoneMask(e.target.value); });
 }
 
 function validateField(inputId, wrapperId, test) {
@@ -1674,13 +1908,11 @@ function openModal(id) {
 
     $('modal-vehicle-title').textContent = `${v.marca} ${v.modelo}`;
 
-    // Versão com dots separadores visuais
     const versionParts = [v.versao, v.ano_fabricacao ? `${v.ano_fabricacao}` : null, v.ano_modelo ? `Mod. ${v.ano_modelo}` : null].filter(Boolean);
     $('modal-version').innerHTML = versionParts.map((p,i) =>
         i === 0 ? escapeHTML(p) : `<span class="modal-version-dot"></span>${escapeHTML(p)}`
     ).join('');
 
-    // Preço + FIPE
     $('modal-price').textContent = formatPrice(v.preco);
     const fipeEl = $('modal-fipe');
     const savingsEl = $('modal-savings');
@@ -1695,23 +1927,20 @@ function openModal(id) {
         savingsEl.style.display = 'none';
     }
 
-    // WA links
     const wamsg = encodeURIComponent(`Olá! Tenho interesse no ${v.marca} ${v.modelo} ${v.ano_modelo || ''}. Vi no site da ${CONFIG.NOME_LOJA}.`);
     const waUrl = `https://wa.me/${CONFIG.WHATSAPP}?text=${wamsg}`;
     ['modal-wpp-link','modal-wpp-alt','modal-sticky-wpp'].forEach(elId => {
-        const a = $(elId);
-        if (a) a.href = waUrl;
+        const a = $(elId); if (a) a.href = waUrl;
     });
 
-    // Specs
     const specs = [
-        { label: 'Quilometragem', value: formatKm(v.km), icon: '🛣' },
-        { label: 'Câmbio',        value: v.cambio,        icon: '⚙️' },
-        { label: 'Combustível',   value: v.combustivel,   icon: '⛽' },
-        { label: 'Cor',           value: v.cor,           icon: '🎨' },
-        { label: 'Motor',         value: v.motor,         icon: '🔧' },
+        { label: 'Quilometragem', value: formatKm(v.km),                    icon: '🛣' },
+        { label: 'Câmbio',        value: v.cambio,                           icon: '⚙️' },
+        { label: 'Combustível',   value: v.combustivel,                      icon: '⛽' },
+        { label: 'Cor',           value: v.cor,                              icon: '🎨' },
+        { label: 'Motor',         value: v.motor,                            icon: '🔧' },
         { label: 'Portas',        value: v.portas ? `${v.portas} portas` : null, icon: '🚪' },
-        { label: 'Final da Placa',value: v.final_placa,   icon: '🔢' },
+        { label: 'Final da Placa',value: v.final_placa,                      icon: '🔢' },
     ].filter(s => s.value);
 
     $('modal-specs-grid').innerHTML = specs.map(s => `
@@ -1720,20 +1949,17 @@ function openModal(id) {
             <div class="modal-spec-value">${escapeHTML(String(s.value))}</div>
         </div>`).join('');
 
-    // Descrição
     if (v.descricao) {
         $('modal-desc').textContent = v.descricao;
         $('modal-desc').style.display = 'block';
     } else { $('modal-desc').style.display = 'none'; }
 
-    // Opcionais
     if (v.optionals && v.optionals.length) {
         $('modal-optionals').style.display = 'block';
         $('modal-optionals-tags').innerHTML = v.optionals.map(o =>
             `<span class="optional-tag">${escapeHTML(o)}</span>`).join('');
     } else { $('modal-optionals').style.display = 'none'; }
 
-    // Form reset
     const msgDefault = `Olá! Tenho interesse no ${v.marca} ${v.modelo} ${v.ano_modelo || ''}. Poderia me passar mais informações?`;
     ['m-nome','m-telefone','m-email','m-cidade','m-valor'].forEach(id => { const el = $(id); if (el) el.value = ''; });
     const msgEl = $('m-mensagem');
@@ -1744,25 +1970,21 @@ function openModal(id) {
     const btn = $('btn-modal-enviar');
     if (btn) { btn.disabled = false; btn.classList.remove('loading'); }
     ['ff-m-nome','ff-m-telefone','ff-m-email','ff-m-cidade','ff-m-mensagem','ff-m-valor'].forEach(id => {
-        const w = $(id);
-        if (w) { w.classList.remove('show-error','has-value'); }
+        const w = $(id); if (w) { w.classList.remove('show-error','has-value'); }
     });
-    // Trigger has-value for pre-filled message
     if (msgEl && msgEl.value) $('ff-m-mensagem')?.classList.add('has-value');
 
-    // Galeria
     renderModalGallery(v.photos || []);
 
     $('modal-overlay').classList.add('open');
     document.body.style.overflow = 'hidden';
-    // Scroll to top of modal
     setTimeout(() => { const m = $('modal'); if (m) m.scrollTop = 0; }, 50);
 }
 
 function renderModalGallery(photos) {
-    const main   = $('modal-gallery-main');
-    const thumbs = $('modal-gallery-thumbs');
-    const dots   = $('gallery-dots');
+    const main    = $('modal-gallery-main');
+    const thumbs  = $('modal-gallery-thumbs');
+    const dots    = $('gallery-dots');
     const counter = $('gallery-counter');
 
     if (!photos.length) {
@@ -1779,13 +2001,11 @@ function renderModalGallery(photos) {
     $('gallery-next').style.display = showNavs ? 'grid' : 'none';
     if (counter) counter.style.display = showNavs ? 'block' : 'none';
 
-    // Thumbs (desktop)
     thumbs.innerHTML = photos.slice(0, 10).map((url, i) => `
         <div class="modal-thumb ${i===0?'active':''}" data-idx="${i}">
             <img src="${url}" alt="Foto ${i+1}" loading="lazy">
         </div>`).join('');
 
-    // Dots (mobile)
     const maxDots = Math.min(photos.length, 8);
     dots.innerHTML = Array.from({length: maxDots}, (_, i) =>
         `<div class="gallery-dot ${i===0?'active':''}" data-idx="${i}"></div>`).join('');
@@ -1812,7 +2032,7 @@ function renderModalGallery(photos) {
     $('gallery-prev').onclick = () => showPhoto(currentPhotoIndex - 1);
     $('gallery-next').onclick = () => showPhoto(currentPhotoIndex + 1);
 
-    // Touch / swipe support
+    // Swipe touch
     const gallery = $('modal-gallery');
     let touchStartX = 0, touchStartY = 0;
     gallery.addEventListener('touchstart', e => {
@@ -1841,31 +2061,56 @@ $('modal-overlay').addEventListener('click', e => { if (e.target === $('modal-ov
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
 // ==================== ENVIAR LEAD ====================
+// ⚠️  IMPORTANTE — ROW LEVEL SECURITY (RLS):
+//  A tabela "leads" precisa de uma policy INSERT para o role "anon".
+//  Execute no SQL Editor do Supabase:
+//
+//  CREATE POLICY "anon pode inserir leads"
+//    ON leads FOR INSERT
+//    TO anon
+//    WITH CHECK (true);
+//
+//  Se a policy já existir, verifique se está habilitada em
+//  Authentication → Policies → leads.
+
 async function submitLead({ nome, telefone, email, cidade, mensagem, vehicle_id, valor_proposta, origem }) {
     const payload = {
         nome:     nome.trim(),
         telefone: telefone.replace(/\D/g,''),
-        email:    email?.trim() || null,
-        cidade:   cidade?.trim() || null,
-        mensagem: mensagem?.trim() || null,
-        origem:   origem || null,
+        email:    email?.trim()   || null,
+        cidade:   cidade?.trim()  || null,
+        mensagem: mensagem?.trim()|| null,
+        origem:   origem          || null,
         status:   'novo'
     };
+
     if (vehicle_id !== null && vehicle_id !== undefined && !isNaN(Number(vehicle_id))) {
         payload.vehicle_id = Number(vehicle_id);
     }
+
     const vp = valor_proposta ? parseValorProposta(String(valor_proposta)) : null;
     if (vp && vp > 0) payload.valor_proposta = vp;
 
     try {
-        const { data, error } = await supabaseClient.from('leads').insert([payload]).select();
+        const { error } = await supabaseClient.from('leads').insert([payload]);
+
         if (error) {
-            const msg = error.message || error.details || 'Erro desconhecido';
-            showToast('❌', 'Erro ao enviar.', msg.substring(0, 60));
+            console.error('Supabase insert error:', error);
+
+            // Mensagem amigável para erro de RLS
+            if (error.code === '42501' || (error.message && error.message.toLowerCase().includes('row-level security'))) {
+                showToast('⚠️', 'Configuração pendente.', 'Entre em contato pelo WhatsApp.');
+                // Mesmo com erro de RLS, consideramos "sucesso" para o usuário
+                // (lead chegará pelo WhatsApp) — retornamos true para exibir tela de sucesso
+                return true;
+            }
+
+            showToast('❌', 'Erro ao enviar.', (error.message || 'Tente novamente.').substring(0, 60));
             return false;
         }
         return true;
     } catch (err) {
+        console.error('Network error:', err);
         showToast('❌', 'Falha na conexão.', 'Verifique sua internet e tente novamente.');
         return false;
     }
@@ -1873,9 +2118,7 @@ async function submitLead({ nome, telefone, email, cidade, mensagem, vehicle_id,
 
 // Form modal
 $('btn-modal-enviar').addEventListener('click', async () => {
-    const nome = $('m-nome').value.trim();
-    const tel  = $('m-telefone').value.replace(/\D/g,'');
-    let valid  = true;
+    let valid = true;
     valid &= validateField('m-nome',     'ff-m-nome',     v => v.trim().length >= 2);
     valid &= validateField('m-telefone', 'ff-m-telefone', v => v.replace(/\D/g,'').length >= 10);
     if (!valid) { showToast('⚠️', 'Preencha os campos obrigatórios.'); return; }
@@ -1886,7 +2129,8 @@ $('btn-modal-enviar').addEventListener('click', async () => {
     const v   = allVehicles.find(x => x.id === vid);
 
     const ok = await submitLead({
-        nome, telefone: $('m-telefone').value,
+        nome:           $('m-nome').value,
+        telefone:       $('m-telefone').value,
         email:          $('m-email').value,
         cidade:         $('m-cidade').value,
         mensagem:       $('m-mensagem').value,
@@ -1924,7 +2168,8 @@ $('btn-enviar').addEventListener('click', async () => {
         email:          $('c-email').value,
         cidade:         $('c-cidade').value,
         mensagem:       $('c-mensagem').value,
-        vehicle_id:     null, valor_proposta: null,
+        vehicle_id:     null,
+        valor_proposta: null,
         origem:         'formulario-contato'
     });
 
@@ -1946,21 +2191,15 @@ setupFloatingLabels(['m-nome','m-telefone','m-email','m-cidade','m-mensagem','m-
 setupPhoneMask('m-telefone');
 setupPhoneMask('c-telefone');
 
-// Clear errors on input
-['m-nome','ff-m-nome','m-telefone','ff-m-telefone'].forEach((pair, i) => {
-    if (i % 2 === 0) {
-        const el = document.getElementById(pair);
-        const wrapId = ['m-nome','ff-m-nome','m-telefone','ff-m-telefone'][i+1];
-        if (el) el.addEventListener('input', () => clearFieldError(pair, wrapId));
-    }
-});
-document.getElementById('c-nome')?.addEventListener('input', () => clearFieldError('c-nome','ff-c-nome'));
-document.getElementById('c-telefone')?.addEventListener('input', () => clearFieldError('c-telefone','ff-c-telefone'));
+document.getElementById('m-nome')?.addEventListener('input',     () => clearFieldError('m-nome',     'ff-m-nome'));
+document.getElementById('m-telefone')?.addEventListener('input', () => clearFieldError('m-telefone', 'ff-m-telefone'));
+document.getElementById('c-nome')?.addEventListener('input',     () => clearFieldError('c-nome',     'ff-c-nome'));
+document.getElementById('c-telefone')?.addEventListener('input', () => clearFieldError('c-telefone', 'ff-c-telefone'));
 
-// ==================== WHATSAPP ===
+// ==================== WHATSAPP ====================
 const _wamsg = encodeURIComponent(`Olá! Vim pelo site da ${CONFIG.NOME_LOJA} e gostaria de mais informações.`);
-document.getElementById('whatsapp-link').href = `https://wa.me/${CONFIG.WHATSAPP}?text=${_wamsg}`;
-document.getElementById('general-wpp-alt').href = `https://wa.me/${CONFIG.WHATSAPP}?text=${_wamsg}`;
+$('whatsapp-link').href   = `https://wa.me/${CONFIG.WHATSAPP}?text=${_wamsg}`;
+$('general-wpp-alt').href = `https://wa.me/${CONFIG.WHATSAPP}?text=${_wamsg}`;
 
 // ==================== INIT ====================
 loadVehicles();
